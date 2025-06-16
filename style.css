@@ -278,7 +278,7 @@ to{
    animation: food 5s linear infinite;
    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
 }
-@keyframes fo    od{
+@keyframes food{
   from{
     transform: skew(-7deg);
 }
