@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flavour Fusion</title>
+  <link rel="icon" href="./images/Flavour Fusion.png">
+  <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Unlock&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      background-color: #ece6d4;
+      color: #333333;
+    }
+
+    header {
+      display: flex;
+      align-items:center;
+      justify-content: space-between;
+      position:relative;
+      font-size:large;
+      background-color: #8b977c;
+      color: #333333;
+    }
+
+
+    header img {
+      height: 75px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .navbar {
+      display: flex;
+      gap: 15px;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #333333;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .navbar a:hover,
+    header span:hover {
+      color: #f3f3f3;
+    }
+
+    .main {
+      padding: 30px;
+      text-align:justify;
+      font-family: 'Unlock', serif;
+    }
+
+    .main h4 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    details {
+      background-color: #f9f3e8;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      margin: 15px auto;
+      width: 90%;
+      padding: 15px;
+      color: #333333;
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+
+    summary {
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    details[open] summary {
+      margin-bottom: 10px;
+    }
+
+    ul li, ol li {
+      list-style-position: inside;
+      margin: 5px 0;
+    }
+
+    iframe {
+      margin-top: 10px;
+      border-radius: 10px;
+      border: none;
+      width: 100%;
+      height: 315px;
+    }
+
+    footer {
+      background-color: #8b977c;
+      text-align: center;
+      padding: 12px 0;
+      margin-top: auto;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img id="ilogo" src="./images/Flavour_Fusion-removebg-preview.png" alt="Logo">
+      <span>FLAVOUR FUSION</span>
+    </div>
+    <nav class="navbar">
+      <a href="./index.html">Home</a>
+      <a href="./aboutus.html">About Us</a>
+      <a href="./login.html">Login</a>
+      <a href="./signup.html">Sign up</a>
+    </nav>
+  </header>
+
+  <div class="main">
+    <h4>Soups and Drinks</h4>
+
+    <details>
+  <summary>🍄1. CREAMY MUSHROOM SOUP</summary>
+  <ul>
+    <h4>Ingredients:</h4>
+    <li>Mushrooms, onion, garlic, butter</li>
+    <li>Milk, cream, vegetable broth</li>
+  </ul>
+  <ol>
+    <h4>Steps:</h4>
+    <li>Sauté onions and mushrooms in butter.</li>
+    <li>Add broth and simmer.</li>
+    <li>Blend and stir in cream before serving.</li>
+  </ol>
+  <iframe src="https://www.youtube.com/embed/g-PT9hK8wPM" allowfullscreen></iframe>
+</details>
+
+<details>
+  <summary>🍜2. MANCHOW SOUP</summary>
+  <ul>
+    <h4>Ingredients:</h4>
+    <li>Mixed veggies, garlic, soy sauce, vinegar</li>
+    <li>Green chilies, spring onions, cornflour</li>
+  </ul>
+  <ol>
+    <h4>Steps:</h4>
+    <li>Sauté vegetables and garlic in oil.</li>
+    <li>Add sauces and water, boil.</li>
+    <li>Thicken with cornflour, garnish with fried noodles.</li>
+  </ol>
+  <iframe src="https://www.youtube.com/embed/iKIhfmiy4II" allowfullscreen></iframe>
+</details>
+
+<details>
+  <summary>🎃3. SAVOURY PUMPKIN SOUP</summary>
+  <ul>
+    <h4>Ingredients:</h4>
+    <li>Pumpkin cubes, garlic, onion, olive oil</li>
+    <li>Vegetable stock, nutmeg, cream</li>
+  </ul>
+  <ol>
+    <h4>Steps:</h4>
+    <li>Roast pumpkin with garlic and onion.</li>
+    <li>Blend and boil with stock and seasonings.</li>
+    <li>Stir in cream and serve warm.</li>
+  </ol>
+  <iframe src="https://www.youtube.com/embed/pXO1l9tZmic" allowfullscreen></iframe>
+</details>
+
+<details>
+  <summary>🍗4. CHICKEN SOUP</summary>
+  <ul>
+    <h4>Ingredients:</h4>
+    <li>Chicken, onion, garlic, carrots, celery</li>
+    <li>Pepper, salt, herbs, stock</li>
+  </ul>
+  <ol>
+    <h4>Steps:</h4>
+    <li>Boil chicken with vegetables and herbs.</li>
+    <li>Shred chicken, strain broth.</li>
+    <li>Combine and simmer before serving.</li>
+  </ol>
+  <iframe src="https://www.youtube.com/embed/PnWkar7WVeg" allowfullscreen></iframe>
+</details>
+
+<details>
+  <summary>🍋5. LEMON MOJITO</summary>
+  <ul>
+    <h4>Ingredients:</h4>
+    <li>Fresh lemon, mint leaves, sugar</li>
+    <li>Soda or sparkling water, ice</li>
+  </ul>
+  <ol>
+    <h4>Steps:</h4>
+    <li>Muddle lemon, mint, and sugar in glass.</li>
+    <li>Add ice and pour soda.</li>
+    <li>Stir and garnish with mint sprig.</li>
+  </ol>
+  <iframe  src="https://www.youtube.com/embed/sIvYdLHwv8A" allowfullscreen></iframe>
+</details>
+
+<details>
+  <summary>💙6. BLUE LAGOON MOJITO</summary>
+  <ul>
+    <h4>Ingredients:</h4>
+    <li>Blue curacao syrup, lemon, mint, soda</li>
+    <li>Ice cubes, sugar syrup</li>
+  </ul>
+  <ol>
+    <h4>Steps:</h4>
+    <li>Muddle mint and lemon.</li>
+    <li>Add blue syrup, ice, and soda.</li>
+    <li>Stir and serve chilled.</li>
+  </ol>
+  <iframe src="https://www.youtube.com/embed/NVdSwq-utaI" allowfullscreen></iframe>
+</details>
+
+<details>
+  <summary>🥑7. AVOCADO SMOOTHIE</summary>
+  <ul>
+    <h4>Ingredients:</h4>
+    <li>Avocado, milk, honey, ice cubes</li>
+    <li>Vanilla essence (optional)</li>
+  </ul>
+  <ol>
+    <h4>Steps:</h4>
+    <li>Scoop avocado and blend with milk and honey.</li>
+    <li>Add ice and vanilla if desired.</li>
+    <li>Blend until smooth and creamy.</li>
+  </ol>
+  <iframe  src="https://www.youtube.com/embed/d2Nl_3bI1_A" allowfullscreen></iframe>
+</details>
+
+<details>
+  <summary>🌴8. DATES SHAKE</summary>
+  <ul>
+    <h4>Ingredients:</h4>
+    <li>Seedless dates, milk, ice, honey</li>
+    <li>Almonds or cashews (optional)</li>
+  </ul>
+  <ol>
+    <h4>Steps:</h4>
+    <li>Soak dates if needed, blend with milk and honey.</li>
+    <li>Add ice and nuts for richness.</li>
+    <li>Serve chilled with crushed ice topping.</li>
+  </ol>
+  <iframe src="https://www.youtube.com/embed/DvQ-ivN4AYg" allowfullscreen></iframe>
+</details>
+</div>
+
+  <footer>
+    &copy; All rights Reserved 2025
+  </footer>
+</body>
+</html>
