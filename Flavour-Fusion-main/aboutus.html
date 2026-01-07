@@ -21,6 +21,13 @@
       <a href="./aboutus.html">About Us</a>
       <a href="./login.html">Login</a> 
       <a href="./signup.html">Sign up</a>
+<<<<<<< HEAD
+=======
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search recipes..." class="search-input">
+        <button id="searchBtn" class="search-btn">🔍</button>
+      </div>
+>>>>>>> 2da62bef9f99280d5761e75e22ac35b6d3db7482
     </nav>
   </header>
 <div class="bg2">
@@ -51,5 +58,24 @@ Think of us as your personal recipe DJ - mixing ingredients, moods, and flavors 
     &COPY All rights Reserved 2025
   </footer>
 
+<<<<<<< HEAD
+=======
+  <script>
+    document.getElementById('searchBtn').addEventListener('click', performSearch);
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        performSearch();
+      }
+    });
+
+    function performSearch() {
+      const searchTerm = document.getElementById('searchInput').value.trim();
+      if (searchTerm) {
+        window.location.href = `search-results.html?q=${encodeURIComponent(searchTerm)}`;
+      }
+    }
+  </script>
+
+>>>>>>> 2da62bef9f99280d5761e75e22ac35b6d3db7482
 </body>
 </html>

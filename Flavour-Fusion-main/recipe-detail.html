@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Detail - Flavour Fusion</title>
+  <link rel="icon" href="./images/Flavour Fusion.png">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Unlock&display=swap" rel="stylesheet">
+  <style>
+    .recipe-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ece6d4;
+      min-height: 100vh;
+    }
+    
+    .recipe-header {
+      text-align: center;
+      margin-bottom: 40px;
+      background-color: #8b977c;
+      color: #333333;
+      padding: 30px;
+      border-radius: 15px;
+    }
+    
+    .recipe-title {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-family: "Limelight", sans-serif;
+    }
+    
+    .recipe-meta {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-size: 16px;
+      flex-wrap: wrap;
+    }
+    
+    .meta-item {
+      background-color: rgba(255, 255, 255, 0.3);
+      padding: 8px 15px;
+      border-radius: 20px;
+    }
+    
+    .recipe-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    
+    .recipe-image-section {
+      text-align: center;
+    }
+    
+    .recipe-image {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .recipe-info-section {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .section-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333333;
+      border-bottom: 2px solid #8b977c;
+      padding-bottom: 10px;
+    }
+    
+    .ingredients-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .ingredient-item {
+      background-color: #f8f9fa;
+      margin: 10px 0;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border-left: 4px solid #8b977c;
+      transition: transform 0.2s ease;
+    }
+    
+    .ingredient-item:hover {
+      transform: translateX(5px);
+    }
+    
+    .instructions-section {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-bottom: 40px;
+    }
+    
+    .instructions-list {
+      counter-reset: step-counter;
+      list-style: none;
+      padding: 0;
+    }
+    
+    .instruction-step {
+      counter-increment: step-counter;
+      margin: 20px 0;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      position: relative;
+      padding-left: 60px;
+      min-height: 50px;
+    }
+    
+    .instruction-step::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #8b977c;
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 50px;
+      font-size: 18px;
+      color: #333333;
+    }
+    
+    .error {
+      text-align: center;
+      padding: 50px;
+      font-size: 18px;
+      color: #d32f2f;
+    }
+    
+    .back-button {
+      display: inline-block;
+      background-color: #8b977c;
+      color: #333333;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      transition: background-color 0.3s ease;
+    }
+    
+    .back-button:hover {
+      background-color: #7a8670;
+    }
+    
+    .tags-section {
+      margin-top: 20px;
+    }
+    
+    .tag {
+      display: inline-block;
+      background-color: #8b977c;
+      color: #333333;
+      padding: 5px 12px;
+      border-radius: 15px;
+      margin: 5px;
+      font-size: 14px;
+    }
+    
+    @media (max-width: 768px) {
+      .recipe-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .recipe-title {
+        font-size: 28px;
+      }
+      
+      .recipe-meta {
+        gap: 15px;
+      }
+      
+      .instruction-step {
+        padding-left: 50px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <img id="ilogo" src="./images/Flavour_Fusion-removebg-preview.png" alt="Logo">
+      <span>FLAVOUR FUSION</span>
+    </div>
+    <nav class="navbar">
+      <a href="./index.html">Home</a>
+      <a href="./aboutus.html">About Us</a>
+      <a href="./login.html">Login</a>
+      <a href="./signup.html">Sign up</a>
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search recipes..." class="search-input">
+        <button id="searchBtn" class="search-btn">🔍</button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="recipe-container">
+    <a href="javascript:history.back()" class="back-button">← Back to Results</a>
+    
+    <div id="loadingMessage" class="loading">Loading recipe details...</div>
+    <div id="errorMessage" class="error" style="display: none;"></div>
+    
+    <div id="recipeContent" style="display: none;">
+      <div class="recipe-header">
+        <h1 class="recipe-title" id="recipeTitle">Loading...</h1>
+        <div class="recipe-meta">
+          <div class="meta-item" id="recipeCategory">Loading...</div>
+          <div class="meta-item" id="recipeArea">Loading...</div>
+          <div class="meta-item" id="recipeTags">Loading...</div>
+        </div>
+      </div>
+      
+      <div class="recipe-content">
+        <div class="recipe-image-section">
+          <img id="recipeImage" src="" alt="Recipe Image" class="recipe-image">
+        </div>
+        
+        <div class="recipe-info-section">
+          <h2 class="section-title">Ingredients</h2>
+          <ul id="ingredientsList" class="ingredients-list">
+            <!-- Ingredients will be populated here -->
+          </ul>
+          
+          <div class="tags-section" id="tagsSection">
+            <h3 class="section-title">Tags</h3>
+            <div id="tagsList">
+              <!-- Tags will be populated here -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="instructions-section">
+        <h2 class="section-title">Instructions</h2>
+        <ol id="instructionsList" class="instructions-list">
+          <!-- Instructions will be populated here -->
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; All rights Reserved 2025
+  </footer>
+
+  <script>
+    // Get recipe ID from URL
+    function getRecipeIdFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('id');
+    }
+    
+    // Fetch recipe details from TheMealDB API
+    async function fetchRecipeDetails(recipeId) {
+      try {
+        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`);
+        const data = await response.json();
+        return data.meals ? data.meals[0] : null;
+      } catch (error) {
+        console.error('Error fetching recipe details:', error);
+        return null;
+      }
+    }
+    
+    // Extract ingredients and measurements from recipe data
+    function extractIngredients(meal) {
+      const ingredients = [];
+      
+      for (let i = 1; i <= 20; i++) {
+        const ingredient = meal[`strIngredient${i}`];
+        const measurement = meal[`strMeasure${i}`];
+        
+        if (ingredient && ingredient.trim()) {
+          ingredients.push({
+            name: ingredient.trim(),
+            measurement: measurement ? measurement.trim() : ''
+          });
+        }
+      }
+      
+      return ingredients;
+    }
+    
+    // Format instructions into numbered steps
+    function formatInstructions(instructions) {
+      if (!instructions) return [];
+      
+      // Split by common delimiters (numbers, newlines, etc.)
+      const steps = instructions
+        .split(/\d+\.\s*|\n\s*\d+\.\s*|\n\s*-\s*|\r\n/)
+        .filter(step => step.trim().length > 0)
+        .map(step => step.trim());
+      
+      return steps;
+    }
+    
+    // Display recipe details
+    function displayRecipeDetails(meal) {
+      const loadingMessage = document.getElementById('loadingMessage');
+      const errorMessage = document.getElementById('errorMessage');
+      const recipeContent = document.getElementById('recipeContent');
+      
+      // Hide loading and error messages
+      loadingMessage.style.display = 'none';
+      errorMessage.style.display = 'none';
+      
+      if (!meal) {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'Recipe not found. Please try searching again.';
+        return;
+      }
+      
+      // Update basic recipe information
+      document.getElementById('recipeTitle').textContent = meal.strMeal;
+      document.getElementById('recipeCategory').textContent = meal.strCategory || 'Unknown Category';
+      document.getElementById('recipeArea').textContent = meal.strArea || 'Unknown Cuisine';
+      document.getElementById('recipeImage').src = meal.strMealThumb;
+      document.getElementById('recipeImage').alt = meal.strMeal;
+      
+      // Handle tags
+      const tagsElement = document.getElementById('recipeTags');
+      const tagsSection = document.getElementById('tagsSection');
+      const tagsList = document.getElementById('tagsList');
+      
+      if (meal.strTags) {
+        const tags = meal.strTags.split(',').map(tag => tag.trim());
+        tagsElement.textContent = tags.join(', ');
+        tagsList.innerHTML = tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+        tagsSection.style.display = 'block';
+      } else {
+        tagsElement.textContent = 'No tags';
+        tagsSection.style.display = 'none';
+      }
+      
+      // Display ingredients
+      const ingredients = extractIngredients(meal);
+      const ingredientsList = document.getElementById('ingredientsList');
+      ingredientsList.innerHTML = ingredients.map(ingredient => 
+        `<li class="ingredient-item">
+          <strong>${ingredient.name}</strong> ${ingredient.measurement ? `- ${ingredient.measurement}` : ''}
+        </li>`
+      ).join('');
+      
+      // Display instructions
+      const instructions = formatInstructions(meal.strInstructions);
+      const instructionsList = document.getElementById('instructionsList');
+      instructionsList.innerHTML = instructions.map(instruction => 
+        `<li class="instruction-step">${instruction}</li>`
+      ).join('');
+      
+      // Show recipe content
+      recipeContent.style.display = 'block';
+    }
+    
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', async function() {
+      const recipeId = getRecipeIdFromURL();
+      
+      if (!recipeId) {
+        document.getElementById('loadingMessage').style.display = 'none';
+        document.getElementById('errorMessage').style.display = 'block';
+        document.getElementById('errorMessage').textContent = 'No recipe ID provided. Please search for a recipe first.';
+        return;
+      }
+      
+      try {
+        // Fetch recipe details
+        const meal = await fetchRecipeDetails(recipeId);
+        
+        // Display the recipe
+        displayRecipeDetails(meal);
+        
+      } catch (error) {
+        console.error('Error loading recipe:', error);
+        document.getElementById('loadingMessage').style.display = 'none';
+        document.getElementById('errorMessage').style.display = 'block';
+        document.getElementById('errorMessage').textContent = 'An error occurred while loading the recipe. Please try again.';
+      }
+    });
+    
+    // Add search functionality to header search bar
+    document.getElementById('searchBtn').addEventListener('click', function() {
+      const searchTerm = document.getElementById('searchInput').value.trim();
+      if (searchTerm) {
+        window.location.href = `search-results.html?q=${encodeURIComponent(searchTerm)}`;
+      }
+    });
+    
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        const searchTerm = this.value.trim();
+        if (searchTerm) {
+          window.location.href = `search-results.html?q=${encodeURIComponent(searchTerm)}`;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
