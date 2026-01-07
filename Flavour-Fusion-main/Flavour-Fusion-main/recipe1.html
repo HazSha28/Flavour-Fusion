@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flavour Fusion</title>
+  <link rel="icon" href="./images/Flavour Fusion.png">
+  <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Unlock&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      background-color: #ece6d4;
+      color: #333333;
+    }
+
+    header {
+      display: flex;
+      align-items:center;
+      justify-content: space-between;
+      position:relative;
+      font-size:large;
+      background-color: #8b977c;
+      color: #333333;
+    }
+
+
+    header img {
+      height: 75px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .navbar {
+      display: flex;
+      gap: 15px;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #333333;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .navbar a:hover,
+    header span:hover {
+      color: #f3f3f3;
+    }
+
+    .main {
+      padding: 30px;
+      text-align:justify;
+      font-family: 'Unlock', serif;
+    }
+
+    .main h4 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    details {
+      background-color: #f9f3e8;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      margin: 15px auto;
+      width: 90%;
+      padding: 15px;
+      color: #333333;
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+
+    summary {
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    details[open] summary {
+      margin-bottom: 10px;
+    }
+
+    ul li, ol li {
+      list-style-position: inside;
+      margin: 5px 0;
+    }
+
+    iframe {
+      margin-top: 10px;
+      border-radius: 10px;
+      border: none;
+      width: 100%;
+      height: 315px;
+    }
+
+    footer {
+      background-color: #8b977c;
+      text-align: center;
+      padding: 12px 0;
+      margin-top: auto;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img id="ilogo" src="./images/Flavour_Fusion-removebg-preview.png" alt="Logo">
+      <span>FLAVOUR FUSION</span>
+    </div>
+    <nav class="navbar">
+      <a href="./index.html">Home</a>
+      <a href="./aboutus.html">About Us</a>
+      <a href="./login.html">Login</a>
+      <a href="./signup.html">Sign up</a>
+    </nav>
+  </header>
+
+  <div class="main">
+    <h4>Global Cravings</h4>
+
+    <details>
+      <summary>🍕1. PIZZA</summary>
+      <ul>
+        <h4>Ingredients:</h4>
+        <li>2¼ tsp yeast, 1 tsp sugar, 2¼ cups warm water</li>
+        <li>500g flour, 15g salt, 15ml olive oil</li>
+        <li>Tomato sauce, mozzarella, toppings</li>
+      </ul>
+      <ol>
+        <h4>Steps:</h4>
+        <li>Activate yeast in warm water.</li>
+        <li>Knead with flour, salt, oil. Rest dough 12–48 hrs.</li>
+        <li>Stretch dough, top with sauce & cheese.</li>
+        <li>Bake at 550°F (290°C) for 5–8 mins.</li>
+      </ol>
+      <iframe src="https://www.youtube.com/embed/sv3TXMSv6Lw" allowfullscreen></iframe>
+    </details>
+
+    <details>
+      <summary>🌯2. SHAWARMA</summary>
+      <ul>
+        <h4>Ingredients:</h4>
+        <li>Chicken, garlic paste, yogurt, lemon juice, spices</li>
+        <li>Pita bread, tahini sauce, salad</li>
+      </ul>
+      <ol>
+        <h4>Steps:</h4>
+        <li>Marinate chicken and grill it.</li>
+        <li>Slice and wrap in pita with veggies and sauces.</li>
+      </ol>
+     <iframe src="https://www.youtube.com/embed/e0cH5WwNokg"  allowfullscreen></iframe>
+    </details>
+
+    <details>
+      <summary>🌮3. BIRRIA TACOS</summary>
+      <ul>
+        <h4>Ingredients:</h4>
+        <li>Mini tortillas, cooked meat, mint chutney, onions</li>
+      </ul>
+      <ol>
+        <h4>Steps:</h4>
+        <li>Warm tortillas and fill with birria and toppings.</li>
+        <li>Garnish and serve warm.</li>
+      </ol>
+      <iframe  src="https://www.youtube.com/embed/1nHvSLi1sWs" allowfullscreen></iframe>
+    </details>
+
+    <details>
+      <summary>🥟4. DUMPLINGS</summary>
+      <ul>
+        <h4>Ingredients:</h4>
+        <li>Dumpling wrappers, minced chicken/veg, soy, garlic</li>
+      </ul>
+      <ol>
+        <h4>Steps:</h4>
+        <li>Stuff and seal dumplings.</li>
+        <li>Steam, pan-fry or boil as desired.</li>
+      </ol>
+      <iframe src="https://www.youtube.com/embed/SJbBe2kNWIY" allowfullscreen></iframe>
+    </details>
+
+    <details>
+      <summary>🍗5. PORATTA & KERALA PEPPER CHICKEN</summary>
+      <ul>
+        <h4>Ingredients:</h4>
+        <li>Poratta: Flour, oil, salt, water</li>
+        <li>Pepper Chicken: Chicken, crushed pepper, curry leaves</li>
+      </ul>
+      <ol>
+        <h4>Steps:</h4>
+        <li>Knead poratta dough and pan-fry in layers.</li>
+        <li>Cook chicken with spices, pepper, and curry leaves.</li>
+      </ol>
+      <iframe src="https://www.youtube.com/embed/ehKuzPWNRic" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/i3I9L9IzaSk" allowfullscreen></iframe>
+    </details>
+
+    <details>
+      <summary>🍝6. CHEESY GARLIC ALFREDO PASTA</summary>
+      <ul>
+        <h4>Ingredients:</h4>
+        <li>Pasta, garlic, cream, butter, cheese</li>
+      </ul>
+      <ol>
+        <h4>Steps:</h4>
+        <li>Sauté garlic in butter, add cream & cheese.</li>
+        <li>Toss cooked pasta in sauce.</li>
+      </ol>
+    <iframe src="https://www.youtube.com/embed/oYiRKd5l2rU" allowfullscreen></iframe>
+    </details>
+
+    <details>
+      <summary>🥗7. DAHI POORI</summary>
+      <ul>
+        <h4>Ingredients:</h4>
+        <li>Pooris, boiled potatoes, curd, chutneys, sev</li>
+      </ul>
+      <ol>
+        <h4>Steps:</h4>
+        <li>Fill pooris with stuffing and curd, top with chutneys and sev.</li>
+      </ol>
+     <iframe src="https://www.youtube.com/embed/M_3frIifyXw" allowfullscreen></iframe>
+    </details>
+
+    <details>
+      <summary>🍣8. SUSHI</summary>
+      <ul>
+        <h4>Ingredients:</h4>
+        <li>Sushi rice, nori, veggies/fish, vinegar, soy sauce</li>
+      </ul>
+      <ol>
+        <h4>Steps:</h4>
+        <li>Spread rice on nori, add filling, roll and slice.</li>
+      </ol>
+      <iframe src="https://www.youtube.com/embed/joweUxpHaqc" allowfullscreen></iframe>
+    </details>
+  </div>
+
+  <footer>
+    &copy; All rights Reserved 2025
+  </footer>
+</body>
+</html>
