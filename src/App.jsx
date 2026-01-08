@@ -5,10 +5,10 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import About from './components/About';
-// import Journal from './pages/Journal';
-// import Profile from './pages/Profile';
+import Journal from './pages/Journal';
+import Profile from './pages/Profile';
 import Favorites from './pages/Favorites';
-// import RecipeDetails from './pages/RecipeDetails';
+import RecipeDetails from './pages/RecipeDetails';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -18,10 +18,31 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          {/* <Route path="/journal" element={<Journal />} /> */}
-          {/* <Route path="/profile" element={<Profile />} /> */}
-          <Route path="/favorites" element={<Favorites />} />
-          {/* <Route path="/recipe/:id" element={<RecipeDetails />} /> */}
+          <Route 
+            path="/journaling" 
+            element={
+              <ProtectedRoute>
+                <Journal />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/profile" 
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/favorites" 
+            element={
+              <ProtectedRoute>
+                <Favorites />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="/recipe/:id" element={<RecipeDetails />} />
           <Route 
             path="/login" 
             element={

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import RecipeSection from './RecipeSection';
@@ -8,8 +8,8 @@ import { FaSearch } from 'react-icons/fa';
 const Home = () => {
   const { currentUser, logout } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleLogout = async () => {
     try {
@@ -23,12 +23,31 @@ const Home = () => {
   };
 
   const handleMenuClick = () => {
+    console.log('Menu clicked, current state:', isDropdownOpen);
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleLinkClick = () => {
+    console.log('Link clicked, closing dropdown');
     setIsDropdownOpen(false);
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -118,17 +137,25 @@ const Home = () => {
           <div className="hamburger-line"></div>
           <div className="hamburger-line"></div>
           <div className="hamburger-line"></div>
-          <div className={`dropdown-content ${isDropdownOpen ? 'show' : ''}`}>
-            <Link to="/" onClick={handleLinkClick}>Home</Link>
-            <Link to="/profile" onClick={handleLinkClick}>Profile</Link>
-            <Link to="/journaling" onClick={handleLinkClick}>Journaling</Link>
-            <Link to="/favorites" onClick={handleLinkClick}>Favorites</Link>
-            <div className="menu-divider"></div>
-            <Link to="/login" onClick={handleLinkClick}>Login</Link>
-            <Link to="/signup" onClick={handleLinkClick}>Sign up</Link>
-            <div className="menu-divider"></div>
-            <button onClick={handleLogout} className="logout-btn">Logout</button>
-          </div>
+        </div>
+        
+        <div ref={dropdownRef} className={`dropdown-content ${isDropdownOpen ? 'show' : ''}`}>
+          <Link to="/" onClick={handleLinkClick}>Home</Link>
+          <Link to="/favorites" onClick={handleLinkClick}>Favorites</Link>
+          <div className="menu-divider"></div>
+          {currentUser ? (
+            <>
+              <Link to="/profile" onClick={handleLinkClick}>Profile</Link>
+              <Link to="/journaling" onClick={handleLinkClick}>Journaling</Link>
+              <div className="menu-divider"></div>
+              <button onClick={handleLogout} className="logout-btn">Logout</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" onClick={handleLinkClick}>Login</Link>
+              <Link to="/signup" onClick={handleLinkClick}>Sign up</Link>
+            </>
+          )}
         </div>
       </header>
 
