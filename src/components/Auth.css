@@ -7,12 +7,137 @@
   min-height: 100vh;
   padding: 40px 20px;
   background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e6 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(139, 151, 124, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(139, 151, 124, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(139, 151, 124, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Enhanced Auth Header */
+.auth-header {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 40px auto;
+  z-index: 10;
+  animation: slideDown 0.8s ease;
+}
+
+.auth-header .logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 20px 30px;
+  border-radius: 20px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 4px 16px rgba(139, 151, 124, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.auth-header .logo:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    0 6px 20px rgba(139, 151, 124, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-color: rgba(139, 151, 124, 0.4);
+}
+
+.auth-header .logo img {
+  height: 45px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.auth-header .logo:hover img {
+  transform: scale(1.05);
+}
+
+.auth-header .logo span {
+  font-family: "Limelight", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #2c3e50;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.auth-header .navbar {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 8px 16px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.auth-header .navbar a {
+  color: #8b977c;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-header .navbar a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(139, 151, 124, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.auth-header .navbar a:hover::before {
+  left: 100%;
+}
+
+.auth-header .navbar a:hover {
+  color: #7a866b;
+  background: rgba(139, 151, 124, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(139, 151, 124, 0.2);
+}
+
+.auth-header .navbar a.active {
+  background: rgba(139, 151, 124, 0.15);
+  color: #7a866b;
+  box-shadow: inset 0 1px 0 rgba(139, 151, 124, 0.3);
 }
 
 /* Toggle Switch */
 .auth-toggle {
   position: relative;
   margin-bottom: 30px;
+  z-index: 5;
 }
 
 .toggle-btn {
@@ -27,6 +152,8 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .toggle-btn::before {
@@ -48,11 +175,17 @@
 .toggle-btn.active {
   background: #8b977c;
   color: white;
+  border-color: #8b977c;
+  box-shadow: 
+    0 4px 16px rgba(139, 151, 124, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .toggle-btn:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  border-color: rgba(139, 151, 124, 0.4);
 }
 
 /* Auth Form */

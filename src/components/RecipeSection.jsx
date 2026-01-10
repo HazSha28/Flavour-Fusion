@@ -16,6 +16,10 @@ const RecipeSection = ({ title, id, recipes }) => {
             subtitle={recipe.subtitle}
             price={recipe.price}
             link={recipe.link}
+            cookTime={recipe.cookTime}
+            prepTime={recipe.prepTime}
+            difficulty={recipe.difficulty}
+            rating={recipe.rating}
           />
         ))}
       </div>

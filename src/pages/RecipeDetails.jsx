@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { FaClock, FaUsers, FaHeart, FaShare, FaBookmark, FaShoppingCart, FaUtensils, FaFire } from 'react-icons/fa';
+import Header from '../components/Header';
 
 const RecipeDetails = () => {
   const { recipeId } = useParams();
@@ -114,32 +115,34 @@ const RecipeDetails = () => {
     };
 
     return (
-      <div className="recipe-details-container">
-        {/* Added a null check for recipe */}
-        {recipe && (
-          <>
-            <div className="recipe-header">
-              {/* Rest of the code */}
-            </div>
+      <Header showHeroSection={false} showNavigation={false}>
+        <div className="recipe-details-container">
+          {/* Added a null check for recipe */}
+          {recipe && (
+            <>
+              <div className="recipe-header">
+                {/* Rest of the code */}
+              </div>
 
-            <div className="recipe-description">
-              {/* Rest of the code */}
-            </div>
+              <div className="recipe-description">
+                {/* Rest of the code */}
+              </div>
 
-            <div className="recipe-ingredients">
-              {/* Rest of the code */}
-            </div>
+              <div className="recipe-ingredients">
+                {/* Rest of the code */}
+              </div>
 
-            <div className="recipe-instructions">
-              {/* Rest of the code */}
-            </div>
+              <div className="recipe-instructions">
+                {/* Rest of the code */}
+              </div>
 
-            <div className="recipe-actions-bottom">
-              {/* Rest of the code */}
-            </div>
-          </>
-        )}
-      </div>
+              <div className="recipe-actions-bottom">
+                {/* Rest of the code */}
+              </div>
+            </>
+          )}
+        </div>
+      </Header>
     );
   };
 

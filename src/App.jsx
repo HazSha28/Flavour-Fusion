@@ -9,6 +9,7 @@ import Journal from './pages/Journal';
 import Profile from './pages/Profile';
 import Favorites from './pages/Favorites';
 import RecipeDetails from './pages/RecipeDetails';
+import RecipeUpload from './pages/RecipeUpload';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -23,6 +24,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Journal />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/upload-recipe" 
+            element={
+              <ProtectedRoute>
+                <RecipeUpload />
               </ProtectedRoute>
             } 
           />

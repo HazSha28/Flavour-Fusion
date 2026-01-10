@@ -1,14 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { FaBars } from 'react-icons/fa';
+import './Auth.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const { login, currentUser, logout } = useAuth();
   const navigate = useNavigate();
+
+  const handleMenuClick = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleLinkClick = () => {
+    setIsDropdownOpen(false);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setIsDropdownOpen(false);
+      navigate('/');
+    } catch (error) {
+      console.error('Failed to log out:', error);
+    }
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,50 +84,76 @@ const Login = () => {
     <>
       <header>
         <div className="logo">
-          <img src="/images/Flavour_Fusion-removebg-preview.png" alt="Logo" />
+          <img id="ilogo" src="/images/Flavour_Fusion-removebg-preview.png" alt="Logo" />
           <span>FLAVOUR FUSION</span>
         </div>
-        <nav className="navbar">
-          <Link to="/">Home</Link>
-          <Link to="/about">About Us</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign up</Link>
-        </nav>
+
+        <div className="hamburger-menu" onClick={handleMenuClick}>
+          <div className="hamburger-line"></div>
+          <div className="hamburger-line"></div>
+          <div className="hamburger-line"></div>
+        </div>
+        
+        <div ref={dropdownRef} className={`dropdown-content ${isDropdownOpen ? 'show' : ''}`}>
+          <Link to="/" onClick={handleLinkClick}>Home</Link>
+          <Link to="/favorites" onClick={handleLinkClick}>Favorites</Link>
+          <div className="menu-divider"></div>
+          {currentUser ? (
+            <>
+              <Link to="/profile" onClick={handleLinkClick}>Profile</Link>
+              <Link to="/journaling" onClick={handleLinkClick}>Journaling</Link>
+              <div className="menu-divider"></div>
+              <button onClick={handleLogout} className="logout-btn">Logout</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" onClick={handleLinkClick} className="active">Login</Link>
+              <Link to="/signup" onClick={handleLinkClick}>Sign up</Link>
+            </>
+          )}
+        </div>
       </header>
       
-      <div className="bg1">
-        <div className="img left-img">
-          <img src="/images/robg-removebg-preview.png" alt="Left Background" />
+      <div className="auth-container">
+        <div className="auth-toggle">
+          <button className="toggle-btn active">Login</button>
         </div>
-        <div className="login">
-          <div className="login-card">
-            <h2>Login</h2>
-            {error && <div className="error-message">{error}</div>}
-            <form onSubmit={handleSubmit}>
+        
+        <div className="auth-form-content">
+          <h2>Welcome Back</h2>
+          {error && <div className="error-message">{error}</div>}
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
               <input 
                 type="email" 
-                placeholder="Email" 
+                placeholder="Email Address" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="auth-input"
               />
+            </div>
+            <div className="form-group">
               <input 
                 type="password" 
                 placeholder="Password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="auth-input"
               />
-              <div className="forgot" onClick={handleForgotPassword}>Forgot Password?</div>
-              <br />
-              <button type="submit" disabled={loading}>
-                {loading ? 'Signing in...' : 'Login'}
+            </div>
+            <div className="form-group">
+              <button type="submit" disabled={loading} className="auth-btn">
+                {loading ? 'Signing in...' : 'Sign In'}
               </button>
-            </form>
+            </div>
+          </form>
+          
+          <div className="auth-links">
+            <Link to="/signup" className="auth-link">Don't have an account? Sign up</Link>
+            <Link to="#" className="auth-link" onClick={handleForgotPassword}>Forgot password?</Link>
           </div>
-        </div>
-        <div className="img right-img">
-          <img src="/images/robg-removebg-preview.png" alt="Right Background" />
         </div>
       </div>
     </>

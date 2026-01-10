@@ -34,10 +34,10 @@ header{
   align-items:center;
   justify-content: space-between;
   position:relative;
-  font-size:small;
+  font-size:medium;
   background-color: #8b977c;
   color: #333333;
-  padding: 4px 20px;
+  padding: 8px 30px;
 }
 
 /* Hamburger Menu */
@@ -185,7 +185,7 @@ header span{
   color: rgb(236, 233, 233);
 }
 header #ilogo{
-  height: 40px;
+  height: 50px;
   margin-left: 10px;
 }
 
@@ -416,14 +416,14 @@ to{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 40px;
+  padding: 4px 40px;
   position: relative;
   z-index: 1;
 }
 
 .hero-content {
   flex: 1;
-  max-width: 500px;
+  max-width: 650px;
   z-index: 2;
 }
 
@@ -431,8 +431,8 @@ to{
   color: #333333 !important;
   font-family: "Limelight", sans-serif !important;
   font-weight: 500;
-  font-size: 1.8rem;
-  margin-bottom: 20px;
+  font-size: 1.9rem;
+  margin-bottom: 25px;
   line-height: 1.2;
 }
 
@@ -440,47 +440,145 @@ to{
   display: flex !important;
   background: white !important;
   border-radius: 25px;
-  padding: 6px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  max-width: 400px;
+  padding: 8px 8px 8px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-right: 12px;
+  max-width: 550px;
   width: 100%;
   align-items: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .search-icon {
   color: #8b977c !important;
   font-size: 16px;
   margin-right: 12px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
 
 .hero-search input {
   flex: 1;
   border: none;
   outline: none;
-  padding: 12px 18px;
-  font-size: 14px;
+  padding: 12px 15px;
+  font-size: 16px;
   background: transparent;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-search input::placeholder {
   color: #999 !important;
+  transition: opacity 0.3s ease;
+  animation: floatPlaceholder 10s infinite;
+}
+
+.hero-search input:focus::placeholder {
+  opacity: 0.3;
+  animation-play-state: paused;
+}
+
+@keyframes floatPlaceholder {
+  0% {
+    transform: translateX(0);
+    opacity: 0.3;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateX(50px);
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 0.3;
+  }
 }
 
 .hero-search button {
   background: #8b977c !important;
   color: white !important;
   border: none;
-  padding: 12px 24px;
   border-radius: 20px;
+  padding: 14px 25px;
   cursor: pointer;
   font-weight: 600;
+  font-size: 16px;
   transition: all 0.3s ease;
-  font-size: 14px;
 }
 
 .hero-search button:hover {
   background: #7a866b;
   transform: translateY(-1px);
+}
+
+.search-emoji {
+  position: absolute;
+  font-size: 20px;
+  opacity: 0;
+  animation: floatEmoji 8s infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.search-emoji:nth-child(1) {
+  animation-delay: 0s;
+  animation-duration: 7s;
+}
+
+.search-emoji:nth-child(2) {
+  animation-delay: 2s;
+  animation-duration: 9s;
+}
+
+.search-emoji:nth-child(3) {
+  animation-delay: 4s;
+  animation-duration: 6s;
+}
+
+.search-emoji:nth-child(4) {
+  animation-delay: 6s;
+  animation-duration: 8s;
+}
+
+.search-emoji:nth-child(5) {
+  animation-delay: 8s;
+  animation-duration: 7s;
+}
+
+@keyframes floatEmoji {
+  0% {
+    transform: translateX(-50px) translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(200px) translateY(-5px);
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(450px) translateY(0);
+    opacity: 0;
+  }
 }
 
 .headimg img {
@@ -578,7 +676,7 @@ to{
   }
   
   .hero-content h1{
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin-bottom: 20px;
   }
   
@@ -588,12 +686,12 @@ to{
   
   .hero-search input {
   padding: 12px 15px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .hero-search button {
   padding: 12px 20px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .headimg img {
@@ -650,7 +748,7 @@ footer {
   }
   
   .hero-content h1 {
-    font-size: 2rem;
+    font-size: 1.6rem;
     margin-bottom: 25px;
   }
   
@@ -695,8 +793,8 @@ footer {
   }
   
   .hero-content h1 {
-    font-size: 2rem;
-    margin-bottom: 30px;
+    font-size: 1.4rem;
+    margin-bottom: 25px;
   }
   
   .headimg img {
