@@ -2,8 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Home from './components/Home';
-import Login from './components/Login';
-import Signup from './components/Signup';
+import Auth from './components/Auth';
 import About from './components/About';
 import Journal from './pages/Journal';
 import Profile from './pages/Profile';
@@ -19,6 +18,26 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route 
+            path="/auth" 
+            element={
+              <PublicRoute>
+                <Auth />
+              </PublicRoute>
+            } 
+          />
+          <Route 
+            path="/login" 
+            element={
+              <Navigate to="/auth" replace />
+            } 
+          />
+          <Route 
+            path="/signup" 
+            element={
+              <Navigate to="/auth" replace />
+            } 
+          />
           <Route 
             path="/journaling" 
             element={
@@ -52,22 +71,6 @@ function App() {
             } 
           />
           <Route path="/recipe/:id" element={<RecipeDetails />} />
-          <Route 
-            path="/login" 
-            element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            } 
-          />
-          <Route 
-            path="/signup" 
-            element={
-              <PublicRoute>
-                <Signup />
-              </PublicRoute>
-            } 
-          />
           <Route 
             path="/protected" 
             element={

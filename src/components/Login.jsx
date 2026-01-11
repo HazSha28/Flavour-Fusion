@@ -8,10 +8,11 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const { login, currentUser, logout } = useAuth();
+  const { login, currentUser, logout, resetPassword } = useAuth();
   const navigate = useNavigate();
 
   const handleMenuClick = () => {
@@ -68,15 +69,22 @@ const Login = () => {
   const handleForgotPassword = async () => {
     if (!email) {
       setError('Please enter your email address first.');
+      setSuccess('');
       return;
     }
     
+    setLoading(true);
+    setError('');
+    setSuccess('');
+    
     try {
-      // TODO: Implement forgot password functionality
-      setError('Password reset functionality will be implemented.');
+      await resetPassword(email);
+      setSuccess('Password reset email sent! Please check your inbox.');
     } catch (err) {
-      setError('Failed to send password reset email.');
+      setError('Failed to send password reset email. Please check your email address.');
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -122,6 +130,7 @@ const Login = () => {
         <div className="auth-form-content">
           <h2>Welcome Back</h2>
           {error && <div className="error-message">{error}</div>}
+          {success && <div className="success-message">{success}</div>}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <input 
