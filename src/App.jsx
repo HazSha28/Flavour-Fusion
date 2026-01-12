@@ -4,8 +4,9 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Home from './components/Home';
 import Auth from './components/Auth';
 import About from './components/About';
-import Journal from './pages/Journal';
 import Profile from './pages/Profile';
+import ProfilePage from './pages/ProfilePage';
+import RecipeJournalingPage from './pages/RecipeJournalingPage';
 import Favorites from './pages/Favorites';
 import RecipeDetails from './pages/RecipeDetails';
 import RecipeUpload from './pages/RecipeUpload';
@@ -39,14 +40,6 @@ function App() {
             } 
           />
           <Route 
-            path="/journaling" 
-            element={
-              <ProtectedRoute>
-                <Journal />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
             path="/upload-recipe" 
             element={
               <ProtectedRoute>
@@ -58,7 +51,15 @@ function App() {
             path="/profile" 
             element={
               <ProtectedRoute>
-                <Profile />
+                <ProfilePage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/recipe-journaling" 
+            element={
+              <ProtectedRoute>
+                <RecipeJournalingPage />
               </ProtectedRoute>
             } 
           />

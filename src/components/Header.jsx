@@ -78,7 +78,7 @@ const Header = ({ showHeroSection = true, showNavigation = true, children }) => 
           {currentUser ? (
             <>
               <Link to="/profile" onClick={handleLinkClick}>Profile</Link>
-              <Link to="/journaling" onClick={handleLinkClick}>Journaling</Link>
+              <Link to="/recipe-journaling" onClick={handleLinkClick}>Journaling</Link>
               <div className="menu-divider"></div>
               <button onClick={handleLogout} className="logout-btn">Logout</button>
             </>

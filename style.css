@@ -1,8 +1,9 @@
 /* CSS Imports */
 @import url('./src/components/Auth.css');
 @import url('./src/pages/Profile.css');
+@import url('./src/pages/ProfilePage.css');
+@import url('./src/pages/RecipeJournalingPage.css');
 @import url('./src/pages/RecipeDetails.css');
-@import url('./src/pages/Journal.css');
 @import url('./src/pages/Favorites.css');
 
 * {
