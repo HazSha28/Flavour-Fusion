@@ -7,6 +7,7 @@ import About from './components/About';
 import Profile from './pages/Profile';
 import ProfilePage from './pages/ProfilePage';
 import RecipeJournalingPage from './pages/RecipeJournalingPage';
+import JournalManager from './components/JournalManager';
 import Favorites from './pages/Favorites';
 import RecipeDetails from './pages/RecipeDetails';
 import RecipeUpload from './pages/RecipeUpload';
@@ -60,6 +61,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <RecipeJournalingPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/journal-manager" 
+            element={
+              <ProtectedRoute>
+                <JournalManager />
               </ProtectedRoute>
             } 
           />

@@ -2,6 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import Header from '../components/Header';
 import { 
+  addJournal, 
+  getUserJournals, 
+  updateJournal, 
+  deleteJournal, 
+  uploadJournalFile 
+} from '../journalService';
+import { 
   FaSave, FaTimes, FaEye, FaEdit, FaCamera, FaVideo, FaPlus, FaTrash,
   FaClock, FaUtensils, FaUsers, FaStar, FaRegStar, FaChevronUp,
   FaChevronDown, FaSpinner, FaCheck, FaExclamationTriangle, FaFire,
@@ -17,6 +24,8 @@ const RecipeJournalingPage = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const [savedJournals, setSavedJournals] = useState([]);
+  const [showSavedJournals, setShowSavedJournals] = useState(false);
   
   // Mode: 'personal' or 'public'
   const [mode, setMode] = useState('personal');
@@ -97,11 +106,25 @@ const RecipeJournalingPage = () => {
     const today = new Date().toISOString().split('T')[0];
     setRecipeDate(today);
     
+    // Load saved journals
+    loadSavedJournals();
+    
     const timer = setTimeout(() => {
       setLoading(false);
     }, 500);
     return () => clearTimeout(timer);
   }, []);
+
+  // Load saved journals from Firebase
+  const loadSavedJournals = async () => {
+    try {
+      const journals = await getUserJournals();
+      setSavedJournals(journals);
+    } catch (error) {
+      console.error('Error loading journals:', error);
+      setMessage({ type: 'error', text: 'Failed to load saved journals' });
+    }
+  };
 
   // Calculate total time
   const getTotalTime = () => {
@@ -258,58 +281,119 @@ const RecipeJournalingPage = () => {
     return true;
   };
 
-  // Save recipe
+  // Save recipe to Firebase
   const handleSave = async (action = 'save') => {
     if (!validateRecipe()) return;
     
     setSaving(true);
-    setMessage({ type: '', text: '' });
+    setMessage({ type: '', text: 'Saving to Firestore...' });
 
     try {
-      // Simulate saving
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      const recipeData = {
-        mode,
+      // Prepare journal data for Firebase
+      const journalData = {
         title: recipeTitle,
-        cuisineType,
-        prepTime,
-        cookTime,
-        totalTime: getTotalTime(),
-        difficulty,
-        servings,
-        ingredients: ingredients.filter(i => i.name.trim()),
-        instructionSteps: instructionSteps.filter(s => s.text.trim()),
-        media: recipeMedia,
-        journaling: mode === 'personal' ? {
-          changes: journalChanges,
-          wentWell: journalWentWell,
-          didntWork: journalDidntWork,
-          tasteRating,
-          textureRating,
-          successRating,
-          nextTimeNotes
-        } : null,
-        timestamp: new Date().toISOString()
+        description: `A ${difficulty} ${recipeType} recipe from ${cuisineType} cuisine. Serves ${servings} people.`,
+        preparationTime: getTotalTime().hours * 60 + getTotalTime().minutes,
+        isPublic: action === 'publish',
+        // Additional recipe-specific data
+        recipeData: {
+          mode,
+          cuisineType,
+          prepTime,
+          cookTime,
+          totalTime: getTotalTime(),
+          difficulty,
+          servings,
+          ingredients: ingredients.filter(i => i.name.trim()),
+          instructionSteps: instructionSteps.filter(s => s.text.trim()),
+          journaling: mode === 'personal' ? {
+            changes: journalChanges,
+            wentWell: journalWentWell,
+            didntWork: journalDidntWork,
+            tasteRating,
+            textureRating,
+            successRating,
+            nextTimeNotes
+          } : null
+        }
       };
 
-      // Mock save to localStorage
-      const existingRecipes = JSON.parse(localStorage.getItem('recipeJournal') || '[]');
-      existingRecipes.push(recipeData);
-      localStorage.setItem('recipeJournal', JSON.stringify(existingRecipes));
-
+      // Create journal entry in Firestore
+      const journalId = await addJournal(journalData);
+      setMessage({ type: 'success', text: 'Journal saved to Firestore! Uploading files...' });
+      
+      // Upload media files if any
+      const imageUrls = [];
+      let videoUrl = '';
+      
+      // Upload main recipe media
+      for (const mediaItem of recipeMedia) {
+        setMessage({ type: '', text: `Uploading ${mediaItem.name}...` });
+        const url = await uploadJournalFile(mediaItem.file, journalId);
+        
+        if (mediaItem.type === 'video') {
+          videoUrl = url;
+        } else {
+          imageUrls.push(url);
+        }
+      }
+      
+      // Upload instruction step media
+      for (const step of instructionSteps) {
+        for (const mediaItem of step.media) {
+          setMessage({ type: '', text: `Uploading step media ${mediaItem.name}...` });
+          const url = await uploadJournalFile(mediaItem.file, journalId);
+          
+          if (mediaItem.type === 'video') {
+            videoUrl = url;
+          } else {
+            imageUrls.push(url);
+          }
+        }
+      }
+      
+      // Update journal with file URLs
+      if (imageUrls.length > 0 || videoUrl) {
+        await updateJournal(journalId, { imageUrls, videoUrl });
+      }
+      
       const actionText = action === 'publish' ? 'published' : 'saved';
+      const fileCount = imageUrls.length + (videoUrl ? 1 : 0);
       setMessage({ 
         type: 'success', 
-        text: `Recipe ${actionText} successfully!` 
+        text: `Recipe ${actionText} successfully! ${fileCount} file(s) uploaded to Firebase Storage.` 
       });
       
-      setTimeout(() => setMessage({ type: '', text: '' }), 3000);
+      // Reload journals
+      await loadSavedJournals();
+      
+      // Clear form after successful save
+      if (action === 'save') {
+        handleClear();
+      }
+      
+      setTimeout(() => setMessage({ type: '', text: '' }), 5000);
       
     } catch (error) {
-      setMessage({ type: 'error', text: 'Failed to save recipe. Please try again.' });
+      console.error('Error saving recipe:', error);
+      setMessage({ type: 'error', text: `Failed to save recipe: ${error.message}` });
     } finally {
       setSaving(false);
+    }
+  };
+
+  // Delete saved journal
+  const handleDeleteJournal = async (journalId) => {
+    if (window.confirm('Are you sure you want to delete this journal entry?')) {
+      try {
+        await deleteJournal(journalId);
+        setMessage({ type: 'success', text: 'Journal deleted successfully!' });
+        await loadSavedJournals();
+        setTimeout(() => setMessage({ type: '', text: '' }), 3000);
+      } catch (error) {
+        console.error('Error deleting journal:', error);
+        setMessage({ type: 'error', text: `Failed to delete journal: ${error.message}` });
+      }
     }
   };
 
@@ -911,6 +995,148 @@ const RecipeJournalingPage = () => {
               </div>
             )}
           </div>
+        </div>
+
+        {/* Saved Journals Section */}
+        <div className="saved-journals-section">
+          <div className="journals-header">
+            <h3>
+              <FaBook />
+              Your Saved Recipe Journals ({savedJournals.length})
+            </h3>
+            <button
+              onClick={() => setShowSavedJournals(!showSavedJournals)}
+              className="btn btn-outline"
+            >
+              {showSavedJournals ? <FaChevronUp /> : <FaChevronDown />}
+              {showSavedJournals ? 'Hide' : 'Show'} Saved Journals
+            </button>
+          </div>
+
+          {showSavedJournals && (
+            <div className="journals-list">
+              {savedJournals.length === 0 ? (
+                <div className="no-journals">
+                  <p>No saved journals yet. Create your first recipe journal above!</p>
+                </div>
+              ) : (
+                savedJournals.map((journal) => (
+                  <div key={journal.id} className="journal-item">
+                    <div className="journal-header">
+                      <h4>{journal.title}</h4>
+                      <div className="journal-actions">
+                        <button
+                          onClick={() => handleDeleteJournal(journal.id)}
+                          className="btn btn-sm btn-danger"
+                        >
+                          <FaTrash />
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <p className="journal-description">{journal.description}</p>
+                    
+                    <div className="journal-meta">
+                      <span className="journal-time">
+                        <FaClock />
+                        {journal.preparationTime} minutes
+                      </span>
+                      <span className="journal-public">
+                        {journal.isPublic ? <FaGlobe /> : <FaLock />}
+                        {journal.isPublic ? 'Public' : 'Private'}
+                      </span>
+                      <span className="journal-date">
+                        {journal.createdAt?.toDate?.() ? 
+                          new Date(journal.createdAt.toDate()).toLocaleDateString() : 
+                          'Unknown date'
+                        }
+                      </span>
+                    </div>
+
+                    {/* Display images from Firebase Storage */}
+                    {journal.imageUrls && journal.imageUrls.length > 0 && (
+                      <div className="journal-images">
+                        <h5>Images ({journal.imageUrls.length}):</h5>
+                        <div className="image-grid">
+                          {journal.imageUrls.map((url, index) => (
+                            <div key={index} className="journal-image">
+                              <img 
+                                src={url} 
+                                alt={`Journal image ${index + 1}`} 
+                                onError={(e) => {
+                                  e.target.style.display = 'none';
+                                  e.target.nextSibling.style.display = 'block';
+                                }}
+                              />
+                              <div className="image-error" style={{display: 'none'}}>
+                                <FaImage />
+                                <span>Image failed to load</span>
+                              </div>
+                              <p className="storage-indicator">✓ Firebase Storage</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Display video from Firebase Storage */}
+                    {journal.videoUrl && (
+                      <div className="journal-video">
+                        <h5>Video:</h5>
+                        <video controls width="300" style={{maxWidth: '100%'}}>
+                          <source src={journal.videoUrl} />
+                          Your browser does not support the video tag.
+                        </video>
+                        <p className="storage-indicator">✓ Firebase Storage</p>
+                      </div>
+                    )}
+
+                    {/* Display recipe data if available */}
+                    {journal.recipeData && (
+                      <div className="recipe-details">
+                        <h5>Recipe Details:</h5>
+                        {journal.recipeData.ingredients && journal.recipeData.ingredients.length > 0 && (
+                          <div className="ingredients-display">
+                            <h6>Ingredients:</h6>
+                            <ul>
+                              {journal.recipeData.ingredients.map((ing, index) => (
+                                <li key={index}>
+                                  {ing.quantity} {ing.unit} {ing.name}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        
+                        {journal.recipeData.journaling && (
+                          <div className="journaling-display">
+                            <h6>Personal Notes:</h6>
+                            {journal.recipeData.journaling.changes && (
+                              <p><strong>Changes:</strong> {journal.recipeData.journaling.changes}</p>
+                            )}
+                            {journal.recipeData.journaling.wentWell && (
+                              <p><strong>What went well:</strong> {journal.recipeData.journaling.wentWell}</p>
+                            )}
+                            {journal.recipeData.journaling.didntWork && (
+                              <p><strong>What didn't work:</strong> {journal.recipeData.journaling.didntWork}</p>
+                            )}
+                            {journal.recipeData.journaling.nextTimeNotes && (
+                              <p><strong>Next time:</strong> {journal.recipeData.journaling.nextTimeNotes}</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {!journal.imageUrls?.length && !journal.videoUrl && (
+                      <p className="no-media">⚠️ No media files uploaded</p>
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>
