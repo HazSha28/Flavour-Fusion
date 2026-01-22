@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { FaCamera, FaUtensils, FaClock, FaUsers, FaStar, FaTag, FaPlus, FaTimes, FaArrowLeft, FaSave, FaImage, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import '../index.css';
 import Header from '../components/Header';
 import './RecipeUpload.css';
 

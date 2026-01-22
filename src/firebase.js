@@ -4,13 +4,12 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBbp7nGo070rwHatQhCgZx-29eGzb0WfMg",
-  authDomain: "flavour-fusion-df68d.firebaseapp.com",
-  projectId: "flavour-fusion-df68d",
-  storageBucket: "flavour-fusion-df68d.firebasestorage.app",
-  messagingSenderId: "3425427726",
-  appId: "1:3425427726:web:68b73d5962edca031c375f",
-  measurementId: "G-1F8X3W32PC"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase

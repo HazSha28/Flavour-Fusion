@@ -5,10 +5,9 @@ import { useAuth } from '../contexts/AuthContext';
 const ProtectedRoute = ({ children }) => {
   const { currentUser } = useAuth();
 
-  // TEMPORARY BYPASS FOR TESTING - COMMENT OUT FOR PRODUCTION
-  // if (!currentUser) {
-  //   return <Navigate to="/login" replace />;
-  // }
+  if (!currentUser) {
+    return <Navigate to="/login" replace />;
+  }
 
   return children;
 };

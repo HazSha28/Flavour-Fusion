@@ -72,12 +72,10 @@ header img {
   margin-right:30px;
   font-size:medium;
   border-radius: 15px;
-  transition: 0.3s ;
 }
 
 .navbar a:hover {
   color: rgb(236, 233, 233);
-
 }
 footer {
   background-color:#8b977c;
@@ -137,7 +135,7 @@ footer {
       color: #333333;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.3s;
+      transition: none;
       font-family:Georgia, 'Times New Roman', Times, serif;
     }
 
@@ -183,7 +181,7 @@ footer {
       color: #333333;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.3s;
+      transition: none;
       font-family:Georgia, 'Times New Roman', Times, serif;
     }
 .min-header{
@@ -231,15 +229,7 @@ footer {
 .img img {
   height: 700px;
   margin-top:20px;
-  animation: spin 27s linear infinite;
-}
-@keyframes spin {
-  from{
-    transform: rotate(0deg);
-}
-to{
-  transform: rotate(360deg);
-}
+  animation: none;
 }
 .headimg{
   justify-content:flex-end;
@@ -285,15 +275,9 @@ to{
 }
 .imgs img{
    height: 450px;
-   animation: food 5s linear infinite;
-   /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+   margin-top:20px;
+   animation: none;
 }
-@keyframes food{
-  from{
-    transform: skew(-7deg);
-}
-}
-
 .main{
   text-align: center;
   padding: 30px;
@@ -317,42 +301,18 @@ to{
       display: none;
     }
 
-    .parent a {
-      text-align: center;
-      text-decoration: none;
-      color: black;
+    .parent .recipe-card-link {
       flex: 0 0 auto;
-      min-width: 200px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 15px;
-      border-radius: 12px;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .parent a:hover {
+    .parent .recipe-card-link:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    .food-img {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 12px;
     }
 
-    .parent a h3 {
-      font-size: 14px;
-      font-weight: 600;
-      color: #333;
-      margin: 0;
-      line-height: 1.3;
-      text-align: center;
-    }
 
  @media (max-width:768px) {
   header,.min-header{
@@ -395,16 +355,8 @@ to{
     width: 90%;
     padding: 0 10px;
   }
-  .parent a {
-    min-width: 140px;
-    padding: 10px;
-  }
-  .food-img {
-    width: 120px;
-    height: 120px;
-  }
-  .parent a h3 {
-    font-size: 12px;
+  .parent .recipe-card-link {
+    padding: 0 10px;
   }
   footer {
     position: relative;
@@ -428,15 +380,8 @@ to{
     gap: 18px;
     width: 85%;
   }
-  .parent a {
+  .parent .recipe-card-link {
     min-width: 170px;
-  }
-  .food-img{
-    width: 140px;
-    height: 140px;
-  }
-  .parent a h3 {
-    font-size: 13px;
   }
 }
 @media (min-width: 1025px) {
@@ -445,10 +390,6 @@ to{
   }
   .img img{
     height: 650px;
-  }
-  .food-img{
-    width: 180px;
-    height: 180px;
   }
   .parent {
     display: flex;
@@ -491,18 +432,6 @@ to{
 
 .dropdown-content.show {
   display: block;
-  animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .dropdown-content a {

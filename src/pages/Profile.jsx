@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import '../index.css';
 import {
   FaCamera, FaUser, FaEdit, FaSave, FaTimes, FaCheck, FaUtensils,
   FaHeart, FaUsers, FaEye, FaCrown, FaBell, FaCog, FaChartLine,

@@ -1,6 +1,7 @@
 import React from 'react';
 import RecipeCard from './RecipeCard';
 
+
 const RecipeSection = ({ title, id, recipes }) => {
   return (
     <>
@@ -11,6 +12,7 @@ const RecipeSection = ({ title, id, recipes }) => {
         {recipes.map((recipe, index) => (
           <RecipeCard
             key={index}
+            id={recipe.id}
             image={recipe.image}
             title={recipe.title}
             subtitle={recipe.subtitle}

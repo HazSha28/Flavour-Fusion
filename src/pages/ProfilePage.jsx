@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import '../index.css';
 import Header from '../components/Header';
 import { 
   FaUser, FaEdit, FaSave, FaTimes, FaCamera, FaEnvelope, 
-  FaCalendar, FaUtensils, FaHeart, FaBookmark, FaSignOutAlt,
+  FaCalendar, FaUtensils, FaHeart, FaBookmark,
   FaSpinner, FaCheck, FaExclamationTriangle, FaTrophy, FaStar, 
   FaFire, FaClock, FaMedal, FaAward, FaGem
 } from 'react-icons/fa';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
@@ -37,17 +40,32 @@ const ProfilePage = () => {
     const loadProfile = async () => {
       try {
         if (currentUser) {
-          // Simulate loading profile data
-          const mockProfile = {
-            username: currentUser.displayName || currentUser.email?.split('@')[0] || 'Food Lover',
-            bio: 'Passionate about exploring flavors from around the world. Love cooking and sharing culinary adventures! 🍳',
-            favoriteCuisines: ['Italian', 'Thai', 'Japanese'],
-            profileImage: currentUser.photoURL || '',
-            createdAt: currentUser.metadata?.creationTime || new Date().toISOString()
-          };
+          // Try to get profile data from Firestore
+          const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
           
-          setProfileData(mockProfile);
-          setTempData(mockProfile);
+          if (userDoc.exists() && userDoc.data().profile) {
+            // Load existing profile data
+            const profile = userDoc.data().profile;
+            setProfileData(profile);
+            setTempData(profile);
+          } else {
+            // Create default profile if none exists
+            const defaultProfile = {
+              username: currentUser.displayName || currentUser.email?.split('@')[0] || 'Food Lover',
+              bio: 'Passionate about exploring flavors from around the world. Love cooking and sharing culinary adventures! 🍳',
+              favoriteCuisines: ['Italian', 'Thai', 'Japanese'],
+              profileImage: currentUser.photoURL || '',
+              createdAt: currentUser.metadata?.creationTime || new Date().toISOString()
+            };
+            
+            setProfileData(defaultProfile);
+            setTempData(defaultProfile);
+            
+            // Save default profile to Firestore
+            await setDoc(doc(db, 'users', currentUser.uid), {
+              profile: defaultProfile
+            }, { merge: true });
+          }
         }
       } catch (error) {
         console.error('Error loading profile:', error);
@@ -82,8 +100,10 @@ const ProfilePage = () => {
     setMessage({ type: '', text: '' });
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Save profile data to Firestore
+      await setDoc(doc(db, 'users', currentUser.uid), {
+        profile: tempData
+      }, { merge: true });
       
       setProfileData({ ...tempData });
       setIsEditing(false);
@@ -116,15 +136,6 @@ const ProfilePage = () => {
     setTempData({ ...tempData, favoriteCuisines: updated });
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error('Logout error:', error);
-      showMessage('error', 'Failed to logout');
-    }
-  };
-
   if (loading) {
     return (
       <div className="profile-page-loading">
@@ -146,8 +157,34 @@ const ProfilePage = () => {
   return (
     <>
       <Header showHeroSection={false} showNavigation={false} />
+      
+      {/* Top Animated Section */}
+      <div className="top-animation">
+        <div className="floating-elements">
+          <div className="floating-element">🍳</div>
+          <div className="floating-element">🥘</div>
+          <div className="floating-element">🍕</div>
+          <div className="floating-element">🍜</div>
+          <div className="floating-element">🥗</div>
+          <div className="floating-element">🍔</div>
+        </div>
+        <div className="wave-animation"></div>
+      </div>
+      
+      {/* Fixed Floating Edit Button */}
+      {!isEditing && (
+        <button
+          onClick={handleEdit}
+          className="fixed-edit-btn"
+          title="Edit Profile"
+        >
+          <FaEdit />
+          <span>Edit Profile</span>
+        </button>
+      )}
+      
       <div className="profile-page">
-      <div className="profile-container">
+        <div className="profile-container">
         {/* Profile Card */}
         <div className="profile-card">
           {/* Header Section */}
@@ -268,14 +305,7 @@ const ProfilePage = () => {
               </div>
             ) : (
               <div className="view-actions">
-                <button onClick={handleEdit} className="btn btn-primary">
-                  <FaEdit />
-                  Edit Profile
-                </button>
-                <button onClick={handleLogout} className="btn btn-outline">
-                  <FaSignOutAlt />
-                  Logout
-                </button>
+                {/* No logout button - removed as requested */}
               </div>
             )}
           </div>
@@ -376,7 +406,22 @@ const ProfilePage = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+      
+      {/* Bottom Animated Section */}
+      <div className="bottom-animation">
+        <div className="cooking-animation">
+          <div className="flame">🔥</div>
+          <div className="pot">🍲</div>
+          <div className="steam">💨</div>
+        </div>
+        <div className="bouncing-elements">
+          <div className="bounce-element">🥘</div>
+          <div className="bounce-element">🍜</div>
+          <div className="bounce-element">🍕</div>
+          <div className="bounce-element">🍔</div>
+        </div>
+      </div>
     </>
   );
 };

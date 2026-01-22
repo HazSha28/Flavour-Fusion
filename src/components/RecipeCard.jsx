@@ -1,15 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaStar, FaRegStar, FaClock, FaUtensils, FaFire } from 'react-icons/fa';
+import { useFavorites } from '../contexts/FavoritesContext';
+import './RecipeCard.css';
 
-const RecipeCard = ({ image, title, subtitle, link, cookTime, prepTime, difficulty }) => {
-  const [isFavorited, setIsFavorited] = useState(false);
+const RecipeCard = ({ image, title, subtitle, cookTime, prepTime, difficulty, id, category, rating, time }) => {
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const recipeId = id || title?.replace(/\s+/g, '-').toLowerCase();
+  const isFavorited = isFavorite(recipeId);
+
+  // Default image if none provided
+  const defaultImage = '/images/fly1-removebg-preview.png';
+  const imageUrl = image || defaultImage;
+
+  // Generate link to recipe details page
+  const recipeLink = `/recipe/${recipeId}`;
 
   const handleFavorite = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsFavorited(!isFavorited);
-    console.log(isFavorited ? 'Removed from favorites:' : 'Added to favorites:', title);
+    
+    const recipe = {
+      id: recipeId,
+      title,
+      image,
+      rating: rating || 0,
+      time: time || cookTime || 'Unknown',
+      category: category || 'General'
+    };
+    
+    toggleFavorite(recipe);
   };
 
   const getDifficultyColor = (level) => {
@@ -23,10 +43,18 @@ const RecipeCard = ({ image, title, subtitle, link, cookTime, prepTime, difficul
 
 
   return (
-    <Link to={link} className="recipe-card-link">
+    <Link to={recipeLink} className="recipe-card-link">
       <div className="recipe-card">
         <div className="recipe-image-wrapper">
-          <img src={image} alt={title} className="recipe-card-img" />
+          <img 
+            src={imageUrl} 
+            alt={title} 
+            className="recipe-card-img"
+            onError={(e) => {
+              // Use a fallback image from the local images folder
+              e.target.src = '/images/fly1-removebg-preview.png';
+            }}
+          />
           
           <button 
             className="favorite-icon"
