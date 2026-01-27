@@ -102,45 +102,34 @@ const Header = ({ showHeroSection = true, showNavigation = true, children }) => 
           <span>FLAVOUR FUSION</span>
         </div>
 
-        <div className="navbar">
-          <Link to="/">Home</Link>
-          <Link to="/favorites">Favorites</Link>
-          {currentUser ? (
-            <>
-              <Link to="/profile">Profile</Link>
-              <Link to="/recipe-journaling">Recipe Journaling</Link>
-              <Link to="/journal-manager">Saved Journals</Link>
-            </>
-          ) : (
-            <>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign up</Link>
-            </>
-          )}
-        </div>
-
-        <div className="hamburger-menu" onClick={handleMenuClick}>
+        {/* Only Hamburger Menu - Always visible */}
+        <div className={`hamburger-menu ${isDropdownOpen ? 'active' : ''}`} onClick={handleMenuClick}>
           <div className="hamburger-line"></div>
           <div className="hamburger-line"></div>
           <div className="hamburger-line"></div>
         </div>
         
+        {/* Full Navigation Dropdown */}
         <div ref={dropdownRef} className={`dropdown-content ${isDropdownOpen ? 'show' : ''}`}>
           <Link to="/" onClick={handleLinkClick}>Home</Link>
           <Link to="/favorites" onClick={handleLinkClick}>Favorites</Link>
           <div className="menu-divider"></div>
           {currentUser ? (
             <>
-              <Link to="/profile" onClick={handleLinkClick}>Profile</Link>
-              <Link to="/recipe-journaling" onClick={handleLinkClick}>Recipe Journaling</Link>
-              <Link to="/journal-manager" onClick={handleLinkClick}>Saved Journals</Link>
+              <div className="dropdown-section">
+                <Link to="/profile" onClick={handleLinkClick}>Profile</Link>
+                <Link to="/recipe-journaling" onClick={handleLinkClick}>Recipe Journaling</Link>
+                <Link to="/journal-manager" onClick={handleLinkClick}>Saved Journals</Link>
+              </div>
               <div className="menu-divider"></div>
               <button onClick={handleLogout} className="logout-btn">Logout</button>
             </>
           ) : (
             <>
-              <Link to="/login" onClick={handleLinkClick}>Login</Link>
-              <Link to="/signup" onClick={handleLinkClick}>Sign up</Link>
+              <div className="dropdown-section">
+                <Link to="/login" onClick={handleLinkClick}>Login</Link>
+                <Link to="/signup" onClick={handleLinkClick}>Sign up</Link>
+              </div>
             </>
           )}
         </div>
