@@ -216,7 +216,7 @@ export const allRecipes = {
     steps: [
       {
         title: 'Step 1: Prepare the Filling',
-        description: 'Mix ground pork with finely chopped cabbage, green onions, minced ginger, and soy sauce. Season with salt and pepper.',
+        description: 'Mix ground meat with finely chopped cabbage, green onions, minced ginger, and soy sauce. Season with salt and pepper.',
         time: '15 min'
       },
       {

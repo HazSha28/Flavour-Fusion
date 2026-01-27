@@ -25,6 +25,14 @@ import {
 import Header from '../components/Header';
 import { useFavorites } from '../contexts/FavoritesContext';
 import { allRecipes } from '../data/allRecipes';
+import { allRecipesPart2 } from '../data/allRecipesPart2';
+import { allRecipesPart3 } from '../data/allRecipesPart3';
+import { allRecipesPart4 } from '../data/allRecipesPart4';
+import { allRecipesPart5 } from '../data/allRecipesPart5';
+import { allRecipesPart6 } from '../data/allRecipesPart6';
+
+// Combine all recipe collections
+const combinedRecipes = { ...allRecipes, ...allRecipesPart2, ...allRecipesPart3, ...allRecipesPart4, ...allRecipesPart5, ...allRecipesPart6 };
 
 const RecipeDetails = () => {
   const { id } = useParams();
@@ -43,12 +51,12 @@ const RecipeDetails = () => {
     console.log('=== RECIPE DEBUG ===');
     console.log('id from URL:', id);
     console.log('Type of id:', typeof id);
-    console.log('Available recipe keys:', Object.keys(allRecipes));
+    console.log('Available recipe keys:', Object.keys(combinedRecipes));
     console.log('Looking for key:', id);
-    console.log('Key exists in allRecipes:', id in allRecipes);
+    console.log('Key exists in combinedRecipes:', id in combinedRecipes);
     
-    // Try to get the requested recipe
-    const requestedRecipe = allRecipes[id];
+    // Try to get the requested recipe from combined recipes
+    const requestedRecipe = combinedRecipes[id];
     console.log('Requested recipe:', requestedRecipe?.title || 'NOT FOUND');
     
     if (requestedRecipe) {
@@ -58,7 +66,7 @@ const RecipeDetails = () => {
     } else {
       console.log('❌ Recipe not found, using default pizza');
       // Set a default recipe if requested one not found
-      const firstRecipe = allRecipes['home-pizza'];
+      const firstRecipe = combinedRecipes['home-pizza'];
       setRecipe(firstRecipe);
       setError(null);
     }
@@ -176,9 +184,9 @@ const RecipeDetails = () => {
           <div style={{margin: '20px 0'}}>
             <h3>Available Recipes:</h3>
             <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px', margin: '10px 0'}}>
-              {Object.keys(allRecipes).map(id => (
+              {Object.keys(combinedRecipes).map(id => (
                 <Link key={id} to={`/recipe/${id}`} style={{padding: '10px', border: '1px solid #ccc', borderRadius: '5px', textDecoration: 'none', color: '#333'}}>
-                  {allRecipes[id].title}
+                  {combinedRecipes[id].title}
                 </Link>
               ))}
             </div>
