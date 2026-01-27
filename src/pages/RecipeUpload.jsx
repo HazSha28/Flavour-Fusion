@@ -3,7 +3,6 @@ import { FaCamera, FaUtensils, FaClock, FaUsers, FaStar, FaTag, FaPlus, FaTimes,
 import { useNavigate } from 'react-router-dom';
 import '../index.css';
 import Header from '../components/Header';
-import './RecipeUpload.css';
 
 const RecipeUpload = () => {
   const navigate = useNavigate();

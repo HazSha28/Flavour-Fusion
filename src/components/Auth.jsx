@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { FaBars } from 'react-icons/fa';
-import './Auth.css';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -10,7 +9,7 @@ const Auth = () => {
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, loading } = useAuth();
   const navigate = useNavigate();
 
   // Debug: Log when Auth component renders
@@ -51,8 +50,31 @@ const Auth = () => {
     };
   }, [isDropdownOpen]);
 
+  // Simple test render first
+  if (loading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        backgroundColor: '#ece6d4',
+        fontSize: '18px'
+      }}>
+        Loading authentication...
+      </div>
+    );
+  }
+
   return (
-    <>
+    <div style={{ padding: '20px', backgroundColor: '#ece6d4', minHeight: '100vh' }}>
+      <h1>Auth Component Test</h1>
+      <p>This is a test to see if the Auth component renders</p>
+      <p>Current user: {currentUser ? 'Logged in' : 'Not logged in'}</p>
+      <button onClick={() => setIsLogin(!isLogin)}>
+        Toggle to {isLogin ? 'Signup' : 'Login'}
+      </button>
+      
       <header>
         <div className="logo">
           <img id="ilogo" src="/images/Flavour_Fusion-removebg-preview.png" alt="Logo" />
@@ -87,74 +109,43 @@ const Auth = () => {
       </header>
       
       <div className="auth-container">
-        {/* Floating Food Emojis - Increased Collection */}
-        <div className={`floating-emoji emoji-1 ${isEmailFocused ? 'email-focused' : ''}`}>🍕</div>
-        <div className={`floating-emoji emoji-2 ${isEmailFocused ? 'email-focused' : ''}`}>🍜</div>
-        <div className={`floating-emoji emoji-3 ${isEmailFocused ? 'email-focused' : ''}`}>🥗</div>
-        <div className={`floating-emoji emoji-4 ${isEmailFocused ? 'email-focused' : ''}`}>🍰</div>
-        <div className={`floating-emoji emoji-5 ${isEmailFocused ? 'email-focused' : ''}`}>🍷</div>
-        <div className={`floating-emoji emoji-6 ${isEmailFocused ? 'email-focused' : ''}`}>🍔</div>
-        <div className={`floating-emoji emoji-7 ${isEmailFocused ? 'email-focused' : ''}`}>🍝</div>
-        <div className={`floating-emoji emoji-8 ${isEmailFocused ? 'email-focused' : ''}`}>🍳</div>
-        <div className={`floating-emoji emoji-9 ${isEmailFocused ? 'email-focused' : ''}`}>🥘</div>
-        <div className={`floating-emoji emoji-10 ${isEmailFocused ? 'email-focused' : ''}`}>🍤</div>
-        <div className={`floating-emoji emoji-11 ${isEmailFocused ? 'email-focused' : ''}`}>🥐</div>
-        <div className={`floating-emoji emoji-12 ${isEmailFocused ? 'email-focused' : ''}`}>🍮</div>
-        <div className={`floating-emoji emoji-13 ${isEmailFocused ? 'email-focused' : ''}`}>🍱</div>
-        <div className={`floating-emoji emoji-14 ${isEmailFocused ? 'email-focused' : ''}`}>🍲</div>
-        <div className={`floating-emoji emoji-15 ${isEmailFocused ? 'email-focused' : ''}`}>🍛</div>
-        <div className={`floating-emoji emoji-16 ${isEmailFocused ? 'email-focused' : ''}`}>🥟</div>
-        <div className={`floating-emoji emoji-17 ${isEmailFocused ? 'email-focused' : ''}`}>🍗</div>
-        <div className={`floating-emoji emoji-18 ${isEmailFocused ? 'email-focused' : ''}`}>🥪</div>
-        <div className={`floating-emoji emoji-19 ${isEmailFocused ? 'email-focused' : ''}`}>🌮</div>
-        <div className={`floating-emoji emoji-20 ${isEmailFocused ? 'email-focused' : ''}`}>🌯</div>
-        
-        {/* Food Particles */}
-        <div className="food-particle particle-1"></div>
-        <div className="food-particle particle-2"></div>
-        <div className="food-particle particle-3"></div>
-        <div className="food-particle particle-4"></div>
-        <div className="food-particle particle-5"></div>
-        <div className="food-particle particle-6"></div>
-        <div className="food-particle particle-7"></div>
-        <div className="food-particle particle-8"></div>
-        
-        <div className={`auth-toggle ${!isLogin ? 'signup-active' : ''} ${isEmailFocused ? 'email-focused' : ''}`}>
-          <button
-            className={`toggle-btn ${isLogin ? 'active' : ''}`}
-            onClick={() => {
-              console.log('Sign In button clicked, current isLogin:', isLogin);
-              if (!isLogin) {
-                console.log('Switching to Sign In');
-                setIsLogin(true);
-              }
-            }}
-          >
+        <div className="auth-toggle">
+          <button className={`toggle-btn ${isLogin ? 'active' : ''}`} onClick={() => setIsLogin(true)}>
             Sign In
           </button>
-          <button
-            className={`toggle-btn ${!isLogin ? 'active' : ''}`}
-            onClick={() => {
-              console.log('Sign Up button clicked, current isLogin:', isLogin);
-              if (isLogin) {
-                console.log('Switching to Sign Up');
-                setIsLogin(false);
-              }
-            }}
-          >
+          <button className={`toggle-btn ${!isLogin ? 'active' : ''}`} onClick={() => setIsLogin(false)}>
             Sign Up
           </button>
         </div>
         
-        <div className={`auth-form-content ${isSwitching ? 'switching' : ''} ${isEmailFocused ? 'email-focused' : ''}`}>
-          {isLogin ? (
-            <LoginForm setIsEmailFocused={setIsEmailFocused} />
-          ) : (
-            <SignupForm setIsEmailFocused={setIsEmailFocused} />
-          )}
+        <div className="auth-form-content">
+          <h2>{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
+          <p>This is a test form - styling should be visible</p>
+          
+          <div className="form-group">
+            <input
+              type="email"
+              placeholder="Email Address"
+              className="auth-input"
+            />
+          </div>
+          
+          <div className="form-group">
+            <input
+              type="password"
+              placeholder="Password"
+              className="auth-input"
+            />
+          </div>
+          
+          <div className="form-group">
+            <button type="button" className="auth-btn">
+              {isLogin ? 'Sign In' : 'Sign Up'}
+            </button>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -3,7 +3,6 @@ import { FaHeart, FaRegSmile, FaBookmark, FaShare, FaFilter, FaSort, FaUtensils,
 import Header from '../components/Header';
 import { useFavorites } from '../contexts/FavoritesContext';
 import '../index.css';
-import './Favorites.css';
 
 const Favorites = () => {
   const { favorites, loading } = useFavorites();

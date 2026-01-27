@@ -69,75 +69,514 @@ const Home = () => {
   // Use all original hardcoded recipes by default
   useEffect(() => {
     // Set all original hardcoded recipes organized by cuisine with appropriate images
+    // ---------------- GLOBAL / WORLD CUISINE ----------------
     setRecipes({
-      // Italian Cuisine
       globalCravings: [
-        { image: "/images/global/F1.jpg", title: "PIZZA", subtitle: "with Vegetable", cookTime: "30 min", prepTime: "15 min", difficulty: "Easy", rating: 4.5, id: "home-pizza" },
-        { image: "/images/global/F2.jpg", title: "CREAMY CARBONARA", subtitle: "Classic Roman", cookTime: "25 min", prepTime: "10 min", difficulty: "Medium", rating: 4.8, id: "home-carbonara" },
-        { image: "/images/global/F3.jpg", title: "LASAGNA", subtitle: "Layered Pasta", cookTime: "60 min", prepTime: "40 min", difficulty: "Hard", rating: 4.8, id: "home-lasagna" },
-        { image: "/images/global/F4.jpg", title: "TIRAMISU", subtitle: "Italian Classic", cookTime: "30 min", prepTime: "25 min", difficulty: "Medium", rating: 4.9, id: "home-tiramisu" }
-      ],
-      
-      // Middle Eastern Cuisine
+  {
+    image: "/images/global/F1.jpg",
+    title: "PIZZA",
+    subtitle: "Vegetable Loaded Classic",
+    cookTime: "30 min",
+    prepTime: "15 min",
+    difficulty: "Easy",
+    rating: 4.5,
+    id: "home-pizza"
+  },
+  {
+    image: "/images/global/F2.jpg",
+    title: "SHAWARMA",
+    subtitle: "Middle Eastern Wrap",
+    cookTime: "25 min",
+    prepTime: "10 min",
+    difficulty: "Easy",
+    rating: 4.7,
+    id: "home-shawarma"
+  },
+  {
+    image: "/images/global/F3.jpg",
+    title: "BIRRIA TACOS",
+    subtitle: "Mexican Slow-Cooked Beef",
+    cookTime: "60 min",
+    prepTime: "40 min",
+    difficulty: "Hard",
+    rating: 4.8,
+    id: "home-birria-tacos"
+  },
+  {
+    image: "/images/global/F4.jpg",
+    title: "DUMPLINGS",
+    subtitle: "Asian Comfort Food",
+    cookTime: "30 min",
+    prepTime: "25 min",
+    difficulty: "Medium",
+    rating: 4.9,
+    id: "home-dumplings"
+  },
+  {
+    image: "/images/global/F5.jpg",
+    title: "PARATHA CURRY",
+    subtitle: "Spicy Chicken",
+    cookTime: "35 min",
+    prepTime: "20 min",
+    difficulty: "Medium",
+    rating: 4.6,
+    id: "home-paratha-curry"
+  },
+  {
+    image: "/images/global/F6.jpg",
+    title: "ALFREDO PASTA",
+    subtitle: "Cheese Loaded",
+    cookTime: "30 min",
+    prepTime: "20 min",
+    difficulty: "Medium",
+    rating: 4.7,
+    id: "home-alfredo-pasta"
+  },
+  {
+    image: "/images/global/F7.jpg",
+    title: "DAHI POORI",
+    subtitle: "Crispy Street Food",
+    cookTime: "20 min",
+    prepTime: "15 min",
+    difficulty: "Medium",
+    rating: 4.8,
+    id: "home-dahi-poori"
+  },
+  {
+    image: "/images/global/F8.jpg",
+    title: "SUSHI",
+    subtitle: "Fresh Japanese",
+    cookTime: "35 min",
+    prepTime: "25 min",
+    difficulty: "Hard",
+    rating: 4.7,
+    id: "home-sushi"
+  }
+],
+
+      // ---------------- BREAKFAST & BRUNCH ----------------
       bitesBrunch: [
-        { image: "/images/bitesbb/F1.jpg", title: "HIGH PROTEIN BOWL", subtitle: "Power Breakfast", cookTime: "15 min", prepTime: "10 min", difficulty: "Easy", rating: 4.4, id: "home-high-protein-bowl" },
-        { image: "/images/bitesbb/F2.jpg", title: "PEACH BANANA SMOOTHIE BOWL", subtitle: "Healthy Start", cookTime: "10 min", prepTime: "5 min", difficulty: "Easy", rating: 4.6, id: "home-smoothie-bowl" },
-        { image: "/images/bitesbb/F3.jpg", title: "TURKISH POACHED EGGS", subtitle: "Mediterranean Style", cookTime: "20 min", prepTime: "12 min", difficulty: "Medium", rating: 4.7, id: "home-poached-eggs" },
-        { image: "/images/bitesbb/F4.jpg", title: "MINI FRITTATA", subtitle: "Italian Egg Dish", cookTime: "25 min", prepTime: "15 min", difficulty: "Easy", rating: 4.3, id: "home-frittata" },
-        { image: "/images/bitesbb/F5.jpg", title: "SHAKSHUKA WITH FETA", subtitle: "Middle Eastern", cookTime: "30 min", prepTime: "18 min", difficulty: "Medium", rating: 4.8, id: "home-shakshuka" },
-        { image: "/images/bitesbb/F6.jpg", title: "GARLIC RICE WITH WHITE SAUCE CHICKEN", subtitle: "Asian Fusion", cookTime: "35 min", prepTime: "20 min", difficulty: "Medium", rating: 4.5, id: "home-garlic-rice" },
-        { image: "/images/bitesbb/F7.jpg", title: "COLESLAW", subtitle: "Classic Side", cookTime: "15 min", prepTime: "10 min", difficulty: "Easy", rating: 4.1, id: "home-coleslaw" },
-        { image: "/images/bitesbb/F8.jpg", title: "FRUIT SALAD", subtitle: "Fresh Mix", cookTime: "12 min", prepTime: "8 min", difficulty: "Easy", rating: 4.2, id: "home-fruit-salad" }
-      ],
-      
-      // Mexican/Latin American Cuisine
+  {
+    image: "/images/bitesbb/F1.jpg",
+    title: "HIGH PROTEIN BOWL",
+    subtitle: "Power Packed Breakfast",
+    cookTime: "15 min",
+    prepTime: "10 min",
+    difficulty: "Easy",
+    rating: 4.4,
+    id: "brunch-protein-bowl"
+  },
+  {
+    image: "/images/bitesbb/F2.jpg",
+    title: "PEACH BANANA SMOOTHIE BOWL",
+    subtitle: "Healthy Morning Start",
+    cookTime: "10 min",
+    prepTime: "5 min",
+    difficulty: "Easy",
+    rating: 4.6,
+    id: "brunch-smoothie-bowl"
+  },
+  {
+    image: "/images/bitesbb/F3.jpg",
+    title: "TURKISH POACHED EGGS",
+    subtitle: "Mediterranean Egg Dish",
+    cookTime: "20 min",
+    prepTime: "12 min",
+    difficulty: "Medium",
+    rating: 4.7,
+    id: "brunch-turkish-eggs"
+  },
+  {
+    image: "/images/bitesbb/F4.jpg",
+    title: "MINI FRITTATA",
+    subtitle: "Italian Egg Bake",
+    cookTime: "25 min",
+    prepTime: "15 min",
+    difficulty: "Easy",
+    rating: 4.3,
+    id: "brunch-frittata"
+  },
+  {
+    image: "/images/bitesbb/F5.jpg",
+    title: "SHAKSHUKA WITH FETA",
+    subtitle: "Middle Eastern Skillet",
+    cookTime: "30 min",
+    prepTime: "18 min",
+    difficulty: "Medium",
+    rating: 4.8,
+    id: "brunch-shakshuka"
+  },
+  {
+    image: "/images/bitesbb/F6.jpg",
+    title: "GARLIC RICE WITH WHITE SAUCE CHICKEN",
+    subtitle: "Asian Fusion Bowl",
+    cookTime: "35 min",
+    prepTime: "20 min",
+    difficulty: "Medium",
+    rating: 4.5,
+    id: "brunch-garlic-rice-chicken"
+  },
+  {
+    image: "/images/bitesbb/F7.jpg",
+    title: "COLESLAW",
+    subtitle: "Classic Crunchy Side",
+    cookTime: "15 min",
+    prepTime: "10 min",
+    difficulty: "Easy",
+    rating: 4.1,
+    id: "brunch-coleslaw"
+  },
+  {
+    image: "/images/bitesbb/F8.jpg",
+    title: "FRUIT SALAD",
+    subtitle: "Fresh Seasonal Mix",
+    cookTime: "12 min",
+    prepTime: "8 min",
+    difficulty: "Easy",
+    rating: 4.2,
+    id: "brunch-fruit-salad"
+  }
+],
+
+      // ---------------- MAINS & DINNER ----------------
       eatYourWay: [
-        { image: "/images/eatw/f1.jpg", title: "CREAMY GARLIC SAUCE WITH STEAK AND SHRIMP", subtitle: "Luxury Dinner", cookTime: "45 min", prepTime: "25 min", difficulty: "Hard", rating: 4.9, id: "home-steak-shrimp" },
-        { image: "/images/eatw/f3.jpg", title: "GRILLED SALMON", subtitle: "Healthy Choice", cookTime: "30 min", prepTime: "15 min", difficulty: "Medium", rating: 4.7, id: "home-grilled-salmon" },
-        { image: "/images/eatw/f4.jpg", title: "PIE AND MASH", subtitle: "Comfort Food", cookTime: "40 min", prepTime: "20 min", difficulty: "Easy", rating: 4.4, id: "home-pie-mash" },
-        { image: "/images/eatw/F2.jpg", title: "TURKISH FATAYER", subtitle: "Traditional Pastry", cookTime: "35 min", prepTime: "30 min", difficulty: "Medium", rating: 4.6, id: "home-fatayer" },
-        { image: "/images/eatw/F5.jpg", title: "STUFFED SEAFOOD BOWL", subtitle: "Ocean Fresh", cookTime: "50 min", prepTime: "35 min", difficulty: "Hard", rating: 4.8, id: "home-seafood-bowl" },
-        { image: "/images/eatw/F6.jpg", title: "BIRIYANI", subtitle: "Indian Special", cookTime: "55 min", prepTime: "40 min", difficulty: "Hard", rating: 4.9, id: "home-biriyani" },
-        { image: "/images/eatw/F7.jpg", title: "HONEY GARLIC CHICKEN", subtitle: "Sweet & Savory", cookTime: "35 min", prepTime: "20 min", difficulty: "Medium", rating: 4.5, id: "home-honey-chicken" },
-        { image: "/images/eatw/F8.jpg", title: "BUTTER CHICKEN WITH NAAN", subtitle: "Indian Classic", cookTime: "40 min", prepTime: "25 min", difficulty: "Medium", rating: 4.7, id: "home-butter-chicken" }
-      ],
-      
-      // Asian Cuisine
+  {
+    image: "/images/eatw/F1.jpg",
+    title: "CREAMY GARLIC STEAK & SHRIMP",
+    subtitle: "Luxury Surf & Turf",
+    cookTime: "45 min",
+    prepTime: "25 min",
+    difficulty: "Hard",
+    rating: 4.9,
+    id: "dinner-steak-shrimp"
+  },
+    {
+    image: "/images/eatw/F2.jpg",
+    title: "GRILLED SALMON",
+    subtitle: "Protein Rich Seafood",
+    cookTime: "35 min",
+    prepTime: "30 min",
+    difficulty: "Medium",
+    rating: 4.6,
+    id: "dinner-grilled-salmon"
+  },
+  {
+    image: "/images/eatw/F2.jpg",
+    title: "PIE AND MASH",
+    subtitle: "British Comfort Classic",
+    cookTime: "30 min",
+    prepTime: "15 min",
+    difficulty: "Medium",
+    rating: 4.7,
+    id: "dinner-pie-mash"
+  },
+  {
+    image: "/images/eatw/F3.jpg",
+    title: "TURKISH FATAYER",
+    subtitle: "Middle Eastern Pastry",
+    cookTime: "40 min",
+    prepTime: "20 min",
+    difficulty: "Medium",
+    rating: 4.4,
+    id: "dinner-fatayer"
+  },
+  {
+    image: "/images/eatw/F5.jpg",
+    title: "STUFFED SEAFOOD BOWL",
+    subtitle: "Ocean Fresh Feast",
+    cookTime: "50 min",
+    prepTime: "35 min",
+    difficulty: "Hard",
+    rating: 4.8,
+    id: "dinner-seafood-bowl"
+  },
+  {
+    image: "/images/eatw/F6.jpg",
+    title: "BIRIYANI",
+    subtitle: "Traditional Indian Rice Dish",
+    cookTime: "55 min",
+    prepTime: "40 min",
+    difficulty: "Hard",
+    rating: 4.9,
+    id: "dinner-biriyani"
+  },
+  {
+    image: "/images/eatw/F7.jpg",
+    title: "HONEY GARLIC CHICKEN",
+    subtitle: "Sweet & Savory Glaze",
+    cookTime: "35 min",
+    prepTime: "20 min",
+    difficulty: "Medium",
+    rating: 4.5,
+    id: "dinner-honey-garlic-chicken"
+  },
+  {
+    image: "/images/eatw/F8.jpg",
+    title: "BUTTER CHICKEN WITH NAAN",
+    subtitle: "North Indian Favorite",
+    cookTime: "40 min",
+    prepTime: "25 min",
+    difficulty: "Medium",
+    rating: 4.7,
+    id: "dinner-butter-chicken"
+  }
+],
+
+      // ---------------- DESSERTS & DRINKS ----------------
       dessertsDrinks: [
-        { image: "/images/dd/F1.jpg", title: "MOUSSE", subtitle: "Chocolate Delight", cookTime: "20 min", prepTime: "15 min", difficulty: "Easy", rating: 4.3, id: "home-mousse" },
-        { image: "/images/dd/F2.jpg", title: "BAKLAVA", subtitle: "Sweet Pastry", cookTime: "60 min", prepTime: "45 min", difficulty: "Hard", rating: 4.6, id: "home-baklava" },
-        { image: "/images/dd/F3.jpg", title: "CREAMY BASQUE CHEESECAKE", subtitle: "Spanish Style", cookTime: "45 min", prepTime: "30 min", difficulty: "Medium", rating: 4.8, id: "home-basque-cheesecake" },
-        { image: "/images/dd/F4.jpg", title: "TIRAMISU", subtitle: "Italian Classic", cookTime: "30 min", prepTime: "25 min", difficulty: "Medium", rating: 4.9, id: "home-tiramisu" },
-        { image: "/images/dd/F5.jpg", title: "FRENCH CREME BRULEE", subtitle: "Caramelized Top", cookTime: "40 min", prepTime: "20 min", difficulty: "Hard", rating: 4.7, id: "home-creme-brulee" },
-        { image: "/images/dd/F6.jpg", title: "APPLE MILLE FEUILLE", subtitle: "French Pastry", cookTime: "35 min", prepTime: "25 min", difficulty: "Medium", rating: 4.5, id: "home-apple-mille-feuille" },
-        { image: "/images/dd/F7.jpg", title: "CHOCOLATE LAVA CAKE", subtitle: "Molten Center", cookTime: "25 min", prepTime: "15 min", difficulty: "Medium", rating: 4.8, id: "home-lava-cake" },
-        { image: "/images/dd/F8.jpg", title: "FRESH BERRY TART", subtitle: "Summer Delight", cookTime: "30 min", prepTime: "20 min", difficulty: "Easy", rating: 4.4, id: "home-berry-tart" }
-      ],
-      
-      // Spanish/Mediterranean Cuisine
-      smartPicks: [
-        { image: "/images/smartp/F1.jpg", title: "SPANISH PAELLA", subtitle: "Seafood Special", cookTime: "45 min", prepTime: "25 min", difficulty: "Hard", rating: 4.7, id: "home-paella" },
-        { image: "/images/smartp/F2.jpg", title: "GAZPACHO", subtitle: "Cold Soup", cookTime: "15 min", prepTime: "10 min", difficulty: "Easy", rating: 4.1, id: "home-gazpacho" },
-        { image: "/images/smartp/F3.jpg", title: "SPANISH TAPAS", subtitle: "Small Plates", cookTime: "40 min", prepTime: "20 min", difficulty: "Medium", rating: 4.5, id: "home-tapas" },
-        { image: "/images/smartp/F4.jpg", title: "SANGRIA", subtitle: "Fruit Punch", cookTime: "10 min", prepTime: "5 min", difficulty: "Easy", rating: 4.3, id: "home-sangria" },
-        { image: "/images/smartp/F5.jpg", title: "MEDITERRANEAN SALAD", subtitle: "Fresh & Healthy", cookTime: "20 min", prepTime: "15 min", difficulty: "Easy", rating: 4.4, id: "home-mediterranean-salad" },
-        { image: "/images/smartp/F6.jpg", title: "GRILLED SEAFOOD", subtitle: "Ocean Fresh", cookTime: "30 min", prepTime: "15 min", difficulty: "Medium", rating: 4.6, id: "home-grilled-seafood" },
-        { image: "/images/smartp/F7.jpg", title: "OLIVE TAPENADE", subtitle: "Mediterranean Spread", cookTime: "10 min", prepTime: "5 min", difficulty: "Easy", rating: 4.2, id: "home-olive-tapenade" },
-        { image: "/images/smartp/F8.jpg", title: "HERB CRUSTED LAMB", subtitle: "Special Occasion", cookTime: "55 min", prepTime: "30 min", difficulty: "Hard", rating: 4.8, id: "home-lamb" }
-      ],
-      
-      // Breakfast & Brunch
+  {
+    image: "/images/dd/F1.jpg",
+    title: "CHOCOLATE MOUSSE",
+    subtitle: "Light & Creamy Dessert",
+    cookTime: "20 min",
+    prepTime: "15 min",
+    difficulty: "Easy",
+    rating: 4.3,
+    id: "dessert-mousse"
+  },
+  {
+    image: "/images/dd/F2.jpg",
+    title: "BAKLAVA",
+    subtitle: "Middle Eastern Sweet Pastry",
+    cookTime: "60 min",
+    prepTime: "45 min",
+    difficulty: "Hard",
+    rating: 4.6,
+    id: "dessert-baklava"
+  },
+  {
+    image: "/images/dd/F3.jpg",
+    title: "BASQUE CHEESECAKE",
+    subtitle: "Spanish Burnt Cheesecake",
+    cookTime: "45 min",
+    prepTime: "30 min",
+    difficulty: "Medium",
+    rating: 4.8,
+    id: "dessert-basque-cheesecake"
+  },
+  {
+    image: "/images/dd/F4.jpg",
+    title: "TIRAMISU",
+    subtitle: "Italian Coffee Dessert",
+    cookTime: "30 min",
+    prepTime: "25 min",
+    difficulty: "Medium",
+    rating: 4.9,
+    id: "dessert-tiramisu"
+  },
+  {
+    image: "/images/dd/F5.jpg",
+    title: "CREME BRULEE",
+    subtitle: "French Caramel Dessert",
+    cookTime: "40 min",
+    prepTime: "20 min",
+    difficulty: "Hard",
+    rating: 4.7,
+    id: "dessert-creme-brulee"
+  },
+  {
+    image: "/images/dd/F6.jpg",
+    title: "APPLE MILLE FEUILLE",
+    subtitle: "Classic French Pastry",
+    cookTime: "35 min",
+    prepTime: "25 min",
+    difficulty: "Medium",
+    rating: 4.5,
+    id: "dessert-mille-feuille"
+  },
+  {
+    image: "/images/dd/F7.jpg",
+    title: "CHOCOLATE LAVA CAKE",
+    subtitle: "Molten Center Dessert",
+    cookTime: "25 min",
+    prepTime: "15 min",
+    difficulty: "Medium",
+    rating: 4.8,
+    id: "dessert-lava-cake"
+  },
+  {
+    image: "/images/dd/F8.jpg",
+    title: "FRESH BERRY TART",
+    subtitle: "Seasonal Fruit Dessert",
+    cookTime: "30 min",
+    prepTime: "20 min",
+    difficulty: "Easy",
+    rating: 4.4,
+    id: "dessert-berry-tart"
+  }
+],
+
+      // ---------------- SMART PICKS & MOOD MEALS ----------------
+smartPicks: [
+  {
+    image: "/images/smartp/F1.jpg",
+    title: "CRISPY SPRING ROLLS",
+    subtitle: "Asian Appetizer",
+    cookTime: "25 min",
+    prepTime: "15 min",
+    difficulty: "Medium",
+    rating: 4.6,
+    id: "smart-spring-rolls"
+  },
+  {
+    image: "/images/smartp/F2.jpg",
+    title: "SPAGHETTI BOLOGNESE",
+    subtitle: "Italian Classic Pasta",
+    cookTime: "30 min",
+    prepTime: "15 min",
+    difficulty: "Medium",
+    rating: 4.7,
+    id: "smart-spaghetti-bolognese"
+  },
+  {
+    image: "/images/smartp/F3.jpg",
+    title: "LASAGNA",
+    subtitle: "Layered Italian Bake",
+    cookTime: "45 min",
+    prepTime: "25 min",
+    difficulty: "Hard",
+    rating: 4.8,
+    id: "smart-lasagna"
+  },
+  {
+    image: "/images/smartp/F4.jpg",
+    title: "TORTILLA ESPAÑOLA",
+    subtitle: "Spanish Potato Omelette",
+    cookTime: "25 min",
+    prepTime: "15 min",
+    difficulty: "Easy",
+    rating: 4.5,
+    id: "smart-tortilla-espanola"
+  },
+  {
+    image: "/images/smartp/F5.jpg",
+    title: "STUFFED PORTOBELLO MUSHROOMS",
+    subtitle: "Vegetarian Gourmet",
+    cookTime: "30 min",
+    prepTime: "20 min",
+    difficulty: "Medium",
+    rating: 4.6,
+    id: "smart-stuffed-mushroom"
+  },
+  {
+    image: "/images/smartp/F6.jpg",
+    title: "RATATOUILLE",
+    subtitle: "French Vegetable Medley",
+    cookTime: "35 min",
+    prepTime: "25 min",
+    difficulty: "Medium",
+    rating: 4.7,
+    id: "smart-ratatouille"
+  },
+  {
+    image: "/images/smartp/F7.jpg",
+    title: "AFRICAN FUFU",
+    subtitle: "Hearty Comfort Meal",
+    cookTime: "60 min",
+    prepTime: "30 min",
+    difficulty: "Hard",
+    rating: 4.8,
+    id: "smart-beef-stew-dumplings"
+  },
+  {
+    image: "/images/smartp/F8.jpg",
+    title: "CHICKEN KORMA",
+    subtitle: "Creamy Indian Curry",
+    cookTime: "40 min",
+    prepTime: "25 min",
+    difficulty: "Medium",
+    rating: 4.7,
+    id: "smart-chicken-korma"
+  }
+],
+
+      // ---------------- SOUPS & SHAKES ----------------
       soupsDrinks: [
-        { image: "/images/robg-removebg-preview.png", title: "FLUFFY PANCAKES", subtitle: "Weekend Special", cookTime: "15 min", prepTime: "10 min", difficulty: "Easy", rating: 4.6, id: "home-pancakes" },
-        { image: "/images/robg-removebg-preview.png", title: "FRENCH OMELETTE", subtitle: "Classic Style", cookTime: "10 min", prepTime: "5 min", difficulty: "Easy", rating: 4.3, id: "home-omelette" },
-        { image: "/images/robg-removebg-preview.png", title: "AVOCADO TOAST", subtitle: "Healthy Start", cookTime: "8 min", prepTime: "5 min", difficulty: "Easy", rating: 4.4, id: "home-avocado-toast" },
-        { image: "/images/robg-removebg-preview.png", title: "BERRY SMOOTHIE", subtitle: "Healthy Blend", cookTime: "8 min", prepTime: "5 min", difficulty: "Easy", rating: 4.4, id: "home-berry-smoothie" }
-      ]
-    });
-    setLoading(false);
+  {
+    image: "/images/sd/F1.jpg",
+    title: "CREAM MUSHROOM SOUP",
+    subtitle: "European Comfort Soup",
+    cookTime: "35 min",
+    prepTime: "20 min",
+    difficulty: "Medium",
+    rating: 4.7,
+    id: "soup-mushroom"
+  },
+  {
+    image: "/images/sd/F2.jpg",
+    title: "HOT & SOUR SOUP",
+    subtitle: "Asian Spicy Soup",
+    cookTime: "30 min",
+    prepTime: "20 min",
+    difficulty: "Medium",
+    rating: 4.7,
+    id: "soup-hot-sour"
+  },
+  {
+    image: "/images/sd/F3.jpg",
+    title: "CREAM PUMPKIN SOUP",
+    subtitle: "Seasonal European Soup",
+    cookTime: "35 min",
+    prepTime: "20 min",
+    difficulty: "Medium",
+    rating: 4.7,
+    id: "soup-pumpkin"
+  },
+  {
+    image: "/images/sd/F4.jpg",
+    title: "CHICKEN SOUP",
+    subtitle: "Hearty Comfort Bowl",
+    cookTime: "40 min",
+    prepTime: "25 min",
+    difficulty: "Medium",
+    rating: 4.7,
+    id: "soup-chicken"
+  },
+  {
+    image: "/images/sd/F5.jpg",
+    title: "ORANGE CURACAO MOJITO",
+    subtitle: "Citrus Mocktail",
+    cookTime: "10 min",
+    prepTime: "5 min",
+    difficulty: "Easy",
+    rating: 4.6,
+    id: "drink-orange-curacao"
+  },
+  {
+    image: "/images/sd/F6.jpg",
+    title: "BLUE CURACAO MOJITO",
+    subtitle: "Refreshing Mocktail",
+    cookTime: "10 min",
+    prepTime: "5 min",
+    difficulty: "Easy",
+    rating: 4.6,
+    id: "drink-blue-curacao"
+  },
+  {
+    image: "/images/sd/F7.jpg",
+    title: "AVOCADO SHAKE",
+    subtitle: "Creamy Health Shake",
+    cookTime: "10 min",
+    prepTime: "5 min",
+    difficulty: "Easy",
+    rating: 4.7,
+    id: "shake-avocado"
+  },
+  {
+    image: "/images/sd/F8.jpg",
+    title: "DATES SHAKE",
+    subtitle: "Natural Energy Drink",
+    cookTime: "10 min",
+    prepTime: "5 min",
+    difficulty: "Easy",
+    rating: 4.7,
+    id: "shake-dates"
+  }
+]
+});
+setLoading(false);
   }, []);
 
-  
   if (loading) {
     return (
       <Header>
@@ -150,7 +589,8 @@ const Home = () => {
   }
 
   return (
-    <Header>
+    <>
+      <Header />
       <RecipeSection 
         id="GC" 
         title="Global Cravings" 
@@ -188,7 +628,7 @@ const Home = () => {
       />
       
       <Footer />
-    </Header>
+    </>
   );
 };
 

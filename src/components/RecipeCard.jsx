@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaStar, FaRegStar, FaClock, FaUtensils, FaFire } from 'react-icons/fa';
 import { useFavorites } from '../contexts/FavoritesContext';
-import './RecipeCard.css';
 
 const RecipeCard = ({ image, title, subtitle, cookTime, prepTime, difficulty, id, category, rating, time }) => {
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -11,7 +10,7 @@ const RecipeCard = ({ image, title, subtitle, cookTime, prepTime, difficulty, id
 
   // Default image if none provided
   const defaultImage = '/images/fly1-removebg-preview.png';
-  const imageUrl = image || defaultImage;
+  const imageUrl = image && image.trim() !== '' ? image : defaultImage;
 
   // Generate link to recipe details page
   const recipeLink = `/recipe/${recipeId}`;
@@ -51,8 +50,14 @@ const RecipeCard = ({ image, title, subtitle, cookTime, prepTime, difficulty, id
             alt={title} 
             className="recipe-card-img"
             onError={(e) => {
-              // Use a fallback image from the local images folder
-              e.target.src = '/images/fly1-removebg-preview.png';
+              console.log('Image failed to load:', imageUrl);
+              // Try multiple fallback images
+              if (!e.target.dataset.fallbackAttempted) {
+                e.target.dataset.fallbackAttempted = 'true';
+                e.target.src = '/images/Flavour_Fusion-removebg-preview.png';
+              } else {
+                e.target.src = '/images/fly1-removebg-preview.png';
+              }
             }}
           />
           

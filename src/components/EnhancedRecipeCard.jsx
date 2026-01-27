@@ -53,7 +53,7 @@ const EnhancedRecipeCard = ({ recipe }) => {
   };
 
   const getImageUrl = () => {
-    if (recipe.image) {
+    if (recipe.image && recipe.image.trim() !== '') {
       return recipe.image;
     }
     return '/images/fly1-removebg-preview.png'; // Fallback image
@@ -91,7 +91,14 @@ const EnhancedRecipeCard = ({ recipe }) => {
             alt={recipe.title} 
             className="recipe-card-img"
             onError={(e) => {
-              e.target.src = '/images/fly1-removebg-preview.png';
+              console.log('Enhanced card image failed to load:', getImageUrl());
+              // Try multiple fallback images
+              if (!e.target.dataset.fallbackAttempted) {
+                e.target.dataset.fallbackAttempted = 'true';
+                e.target.src = '/images/Flavour_Fusion-removebg-preview.png';
+              } else {
+                e.target.src = '/images/fly1-removebg-preview.png';
+              }
             }}
           />
           

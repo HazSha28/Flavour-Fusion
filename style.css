@@ -1,10 +1,4 @@
-/* CSS Imports */
-@import url('./src/components/Auth.css');
-@import url('./src/pages/Profile.css');
-@import url('./src/pages/ProfilePage.css');
-@import url('./src/pages/RecipeJournalingPage.css');
-@import url('./src/pages/RecipeDetails.css');
-@import url('./src/pages/Favorites.css');
+/* CSS Imports - Removed duplicates since they're imported in main.jsx */
 
 * {
   margin: 0;
@@ -15,7 +9,7 @@ html{
   scroll-behavior: smooth;
 }
 .bg{
-  background:url('./images/.jpg');
+  background:url('./images/Flavour Fusion.png');
   background-repeat:no-repeat;
   background-size:500px;
 }
@@ -723,27 +717,34 @@ pointer-events: none;
   }
   
   .hero-content h1{
-    font-size: 1.4rem;
-    margin-bottom: 20px;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
   }
   
   .hero-search {
     max-width: 100%;
+    flex-direction: column;
+    gap: 10px;
   }
   
   .hero-search input {
   padding: 12px 15px;
   font-size: 16px;
+  width: 100%;
 }
 
 .hero-search button {
   padding: 12px 20px;
   font-size: 16px;
+  width: 100%;
 }
 
 .headimg img {
-  height: 250px;
-  margin-top: 20px;
+  height: 200px;
+  margin-top: 15px;
+  width: 100%;
+  object-fit: contain;
 }
 
 .min-header {
@@ -764,10 +765,13 @@ pointer-events: none;
   gap: 15px;
   width: 95%;
   padding: 0 5px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
 }
 
 .main {
-  padding: 20px 15px;
+  padding: 15px 20px;
 }
 
 .main h4 {

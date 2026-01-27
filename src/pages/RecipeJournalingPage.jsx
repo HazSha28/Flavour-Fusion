@@ -18,7 +18,6 @@ import {
   FaLeaf, FaDrumstickBite, FaIceCream, FaCoffee, FaGlassCheers,
   FaCalendar, FaTags, FaPen
 } from 'react-icons/fa';
-import './RecipeJournalingPage.css';
 
 const RecipeJournalingPage = () => {
   const { currentUser } = useAuth();

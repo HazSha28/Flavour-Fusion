@@ -3,7 +3,6 @@ import { useSearchParams, Link } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
 import { FaSearch, FaSpinner, FaExclamationTriangle } from 'react-icons/fa';
 import '../index.css';
-import './SearchResults.css';
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
@@ -16,13 +15,13 @@ const SearchResults = () => {
   const homeRecipes = [
     // Italian Cuisine
     { id: 'home-pizza', title: 'PIZZA', subtitle: 'with Vegetable', image: '/images/global/F1.jpg', category: 'Italian', difficulty: 'Easy', rating: 4.5, time: '45 min' },
-    { id: 'home-pasta', title: 'CREAMY CARBONARA', subtitle: 'Classic Roman', image: '/images/global/F2.jpg', category: 'Italian', difficulty: 'Medium', rating: 4.8, time: '25 min' },
-    { id: 'home-lasagna', title: 'LASAGNA', subtitle: 'Layered Pasta', image: '/images/global/F3.jpg', category: 'Italian', difficulty: 'Hard', rating: 4.8, time: '100 min' },
+    { id: 'home-pasta', title: 'CREAMY CARBONARA', subtitle: 'Classic Roman', image: '/images/global/F3.jpg', category: 'Italian', difficulty: 'Medium', rating: 4.8, time: '25 min' },
+    { id: 'home-lasagna', title: 'LASAGNA', subtitle: 'Layered Pasta', image: '/images/global/F4.jpg', category: 'Italian', difficulty: 'Hard', rating: 4.8, time: '100 min' },
     
     // Middle Eastern Cuisine
-    { id: 'home-shawarma', title: 'SHAWARMA', subtitle: 'Middle Eastern Spiced', image: '/images/fly3-removebg-preview.png', category: 'Middle Eastern', difficulty: 'Medium', rating: 4.8, time: '65 min' },
-    { id: 'home-shakshuka', title: 'SHAKSHUKA WITH FETA', subtitle: 'Middle Eastern', image: '/images/fly3-removebg-preview.png', category: 'Middle Eastern', difficulty: 'Medium', rating: 4.8, time: '48 min' },
-    { id: 'home-falafel', title: 'FALAFEL PLATTER', subtitle: 'Chickpea Delights', image: '/images/fly3-removebg-preview.png', category: 'Middle Eastern', difficulty: 'Easy', rating: 4.5, time: '35 min' },
+    { id: 'home-shawarma', title: 'SHAWARMA', subtitle: 'Middle Eastern Spiced', image: '/images/global/F2.jpg', category: 'Middle Eastern', difficulty: 'Medium', rating: 4.8, time: '65 min' },
+    { id: 'home-shakshuka', title: 'SHAKSHUKA WITH FETA', subtitle: 'Middle Eastern', image: '/images/global/F3.jpg', category: 'Middle Eastern', difficulty: 'Medium', rating: 4.8, time: '48 min' },
+    { id: 'home-falafel', title: 'FALAFEL PLATTER', subtitle: 'Chickpea Delights', image: '/images/global/F4.jpg', category: 'Middle Eastern', difficulty: 'Easy', rating: 4.5, time: '35 min' },
     
     // Main Course & Hearty Meals
     { id: 'home-steak-shrimp', title: 'CREAMY GARLIC SAUCE WITH STEAK AND SHRIMP', subtitle: 'Luxury Dinner', image: '/images/eatw/f1.jpg', category: 'Main Course', area: 'International', cookTime: '45 min', prepTime: '25 min', difficulty: 'Hard', rating: 4.9, time: '70 min' },
@@ -35,10 +34,10 @@ const SearchResults = () => {
     { id: 'home-butter-chicken', title: 'BUTTER CHICKEN WITH NAAN', subtitle: 'Indian Classic', image: '/images/eatw/F8.jpg', category: 'Indian', area: 'Indian', cookTime: '40 min', prepTime: '25 min', difficulty: 'Medium', rating: 4.7, time: '65 min' },
     
     // Asian Cuisine
-    { id: 'home-dumplings', title: 'DUMPLINGS', subtitle: 'Steamed Perfection', image: '/images/head-removebg-preview.png', category: 'Chinese', difficulty: 'Medium', rating: 4.3, time: '65 min' },
-    { id: 'home-sushi', title: 'CALIFORNIA ROLLS', subtitle: 'Japanese Style', image: '/images/robg-removebg-preview.png', category: 'Japanese', difficulty: 'Hard', rating: 4.6, time: '50 min' },
-    { id: 'home-pad-thai', title: 'PAD THAI', subtitle: 'Thai Noodles', image: '/images/head-removebg-preview.png', category: 'Thai', difficulty: 'Medium', rating: 4.7, time: '30 min' },
-    { id: 'home-stir-fry', title: 'VEGETABLE STIR FRY', subtitle: 'Asian Mix', image: '/images/head-removebg-preview.png', category: 'Asian', difficulty: 'Easy', rating: 4.2, time: '20 min' },
+    { id: 'home-dumplings', title: 'DUMPLINGS', subtitle: 'Steamed Perfection', image: '/images/global/F5.jpg', category: 'Chinese', difficulty: 'Medium', rating: 4.3, time: '65 min' },
+    { id: 'home-sushi', title: 'CALIFORNIA ROLLS', subtitle: 'Japanese Style', image: '/images/global/F6.jpg', category: 'Japanese', difficulty: 'Hard', rating: 4.6, time: '50 min' },
+    { id: 'home-pad-thai', title: 'PAD THAI', subtitle: 'Thai Noodles', image: '/images/global/F7.jpg', category: 'Thai', difficulty: 'Medium', rating: 4.7, time: '30 min' },
+    { id: 'home-stir-fry', title: 'VEGETABLE STIR FRY', subtitle: 'Asian Mix', image: '/images/global/F8.jpg', category: 'Asian', difficulty: 'Easy', rating: 4.2, time: '20 min' },
     
     // Spanish/Mediterranean Cuisine
     { id: 'home-paella', title: 'SPANISH PAELLA', subtitle: 'Seafood Special', image: '/images/smartp/F1.jpg', category: 'Spanish', difficulty: 'Hard', rating: 4.7, time: '70 min' },
@@ -76,9 +75,9 @@ const SearchResults = () => {
     { id: 'home-miso-soup', title: 'MISO SOUP', subtitle: 'Japanese Style', image: '/images/robg-removebg-preview.png', category: 'Soup', area: 'Japanese', cookTime: '15 min', prepTime: '5 min', difficulty: 'Easy', rating: 4.1, time: '20 min' },
     
     // Drinks & Beverages
-    { id: 'home-lemonade', title: 'FRESH LEMONADE', subtitle: 'Summer Refresher', image: '/images/Flavour_Fusion-removebg-preview.png', category: 'Drink', area: 'International', cookTime: '5 min', prepTime: '3 min', difficulty: 'Easy', rating: 4.2, time: '8 min' },
-    { id: 'home-smoothie', title: 'BERRY SMOOTHIE', subtitle: 'Healthy Blend', image: '/images/Flavour_Fusion-removebg-preview.png', category: 'Drink', area: 'International', cookTime: '8 min', prepTime: '5 min', difficulty: 'Easy', rating: 4.4, time: '13 min' },
-    { id: 'home-iced-tea', title: 'ICED TEA', subtitle: 'Southern Sweet', image: '/images/Flavour_Fusion-removebg-preview.png', category: 'Drink', area: 'American', cookTime: '10 min', prepTime: '60 min', difficulty: 'Easy', rating: 4.3, time: '70 min' }
+    { id: 'home-lemonade', title: 'FRESH LEMONADE', subtitle: 'Summer Refresher', image: '/images/sd/F4.jpg', category: 'Drink', area: 'International', cookTime: '5 min', prepTime: '3 min', difficulty: 'Easy', rating: 4.2, time: '8 min' },
+    { id: 'home-smoothie', title: 'BERRY SMOOTHIE', subtitle: 'Healthy Blend', image: '/images/sd/F5.jpg', category: 'Drink', area: 'International', cookTime: '8 min', prepTime: '5 min', difficulty: 'Easy', rating: 4.4, time: '13 min' },
+    { id: 'home-iced-tea', title: 'ICED TEA', subtitle: 'Southern Sweet', image: '/images/sd/F6.jpg', category: 'Drink', area: 'American', cookTime: '10 min', prepTime: '60 min', difficulty: 'Easy', rating: 4.3, time: '70 min' }
   ];
 
   const defaultRecipes = [
@@ -156,8 +155,8 @@ const SearchResults = () => {
       // Search for recipes when there's a query
       searchRecipes(query);
     } else {
-      // Show default recipes when no search query
-      setRecipes(defaultRecipes);
+      // Show all home page recipes when no search query
+      setRecipes(homeRecipes);
       setLoading(false);
       setError(null);
     }

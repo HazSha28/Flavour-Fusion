@@ -102,6 +102,23 @@ const Header = ({ showHeroSection = true, showNavigation = true, children }) => 
           <span>FLAVOUR FUSION</span>
         </div>
 
+        <div className="navbar">
+          <Link to="/">Home</Link>
+          <Link to="/favorites">Favorites</Link>
+          {currentUser ? (
+            <>
+              <Link to="/profile">Profile</Link>
+              <Link to="/recipe-journaling">Recipe Journaling</Link>
+              <Link to="/journal-manager">Saved Journals</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Sign up</Link>
+            </>
+          )}
+        </div>
+
         <div className="hamburger-menu" onClick={handleMenuClick}>
           <div className="hamburger-line"></div>
           <div className="hamburger-line"></div>
@@ -142,7 +159,7 @@ const Header = ({ showHeroSection = true, showNavigation = true, children }) => 
               <span className="search-emoji">🍷</span>
               <input 
                 type="text" 
-                placeholder="🍽️ Discover your perfect culinary journey..."
+                placeholder="Discover your perfect culinary journey..."
                 value={searchQuery}
                 onChange={handleInputChange}
                 onFocus={() => searchQuery.trim().length > 0 && setShowSuggestions(true)}

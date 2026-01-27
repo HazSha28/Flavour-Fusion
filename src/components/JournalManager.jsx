@@ -7,7 +7,6 @@ import {
   deleteJournal, 
   uploadJournalFile 
 } from '../journalService';
-import './JournalManager.css';
 
 const JournalManager = () => {
   const [journals, setJournals] = useState([]);

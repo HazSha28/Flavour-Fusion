@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import '../index.css';
 import {
-  FaCamera, FaUser, FaEdit, FaSave, FaTimes, FaCheck, FaUtensils,
-  FaHeart, FaUsers, FaEye, FaCrown, FaBell, FaCog, FaChartLine,
-  FaChartBar, FaClock, FaTrophy, FaSearch, FaRocket
+  FaCamera, FaUser, FaEdit, FaSave, FaTimes, FaCheck,
+  FaUtensils, FaHeart, FaUsers, FaEye,
+  FaCrown, FaBell, FaCog, FaChartLine, FaClock, FaRocket
 } from 'react-icons/fa';
 
 import {
@@ -17,7 +17,6 @@ import {
 
 import { db, storage } from '../firebase';
 import Header from '../components/Header';
-import './Profile.css';
 
 const Profile = () => {
   const { currentUser } = useAuth();
@@ -30,20 +29,10 @@ const Profile = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
-  const [showNotifications, setShowNotifications] = useState(false);
 
-  const [profileData, setProfileData] = useState({
-    username: '',
-    bio: '',
-    profileImage: '',
-    coverImage: '',
-    stats: {
-      recipesCount: 0,
-      followersCount: 0,
-      likesCount: 0,
-      viewsCount: 0
-    }
-  });
+  const [profileData, setProfileData] = useState(null);
+  const [initialProfileData, setInitialProfileData] = useState(null);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   /* ---------------- LOAD PROFILE ---------------- */
   useEffect(() => {
@@ -56,6 +45,7 @@ const Profile = () => {
 
         if (snap.exists()) {
           setProfileData(snap.data());
+          setInitialProfileData(snap.data());
         } else {
           const initialProfile = {
             username: currentUser.displayName || 'Foodie',
@@ -70,8 +60,10 @@ const Profile = () => {
             },
             createdAt: serverTimestamp()
           };
+
           await setDoc(profileRef, initialProfile);
           setProfileData(initialProfile);
+          setInitialProfileData(initialProfile);
         }
       } catch (err) {
         console.error(err);
@@ -84,13 +76,37 @@ const Profile = () => {
     loadProfile();
   }, [currentUser]);
 
+  /* ---------------- TRACK UNSAVED CHANGES ---------------- */
+  useEffect(() => {
+    if (!initialProfileData || !profileData) return;
+
+    const changed =
+      profileData.username !== initialProfileData.username ||
+      profileData.bio !== initialProfileData.bio ||
+      profileData.profileImage !== initialProfileData.profileImage ||
+      profileData.coverImage !== initialProfileData.coverImage;
+
+    setHasUnsavedChanges(changed);
+  }, [profileData, initialProfileData]);
+
   /* ---------------- IMAGE UPLOAD ---------------- */
   const handleImageUpload = async (e, type) => {
     const file = e.target.files[0];
     if (!file) return;
 
+    if (!file.type.startsWith('image/')) {
+      setErrorMessage('Only image files allowed');
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      setErrorMessage('Image must be under 2MB');
+      return;
+    }
+
     setIsUploading(true);
     setUploadProgress(0);
+    setErrorMessage('');
 
     const storageRef = ref(
       storage,
@@ -101,12 +117,12 @@ const Profile = () => {
 
     uploadTask.on(
       'state_changed',
-      (snapshot) => {
+      snapshot => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setUploadProgress(progress);
       },
-      (error) => {
+      error => {
         console.error(error);
         setErrorMessage('Image upload failed');
         setIsUploading(false);
@@ -114,7 +130,7 @@ const Profile = () => {
       async () => {
         const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
-        setProfileData((prev) => ({
+        setProfileData(prev => ({
           ...prev,
           [type]: downloadURL
         }));
@@ -139,11 +155,17 @@ const Profile = () => {
 
     try {
       await updateDoc(doc(db, 'profiles', currentUser.uid), {
-        ...profileData,
+        username: profileData.username,
+        bio: profileData.bio,
+        profileImage: profileData.profileImage,
+        coverImage: profileData.coverImage,
         updatedAt: serverTimestamp()
       });
-      setSuccessMessage('Profile updated successfully!');
+
+      setInitialProfileData(profileData);
       setIsEditing(false);
+      setHasUnsavedChanges(false);
+      setSuccessMessage('Profile updated successfully!');
     } catch (err) {
       console.error(err);
       setErrorMessage('Failed to save profile');
@@ -152,8 +174,10 @@ const Profile = () => {
     }
   };
 
-  /* ---------------- COMPUTED ---------------- */
+  /* ---------------- USER LEVEL ---------------- */
   const userLevel = useMemo(() => {
+    if (!profileData) return {};
+
     const points =
       profileData.stats.likesCount +
       profileData.stats.recipesCount * 10;
@@ -162,10 +186,10 @@ const Profile = () => {
     if (points < 500) return { level: 2, title: 'Home Cook', color: '#4caf50' };
     if (points < 1000) return { level: 3, title: 'Skilled Chef', color: '#2196f3' };
     return { level: 4, title: 'Master Chef', color: '#ff9800' };
-  }, [profileData.stats]);
+  }, [profileData]);
 
   /* ---------------- LOADING ---------------- */
-  if (loading) {
+  if (loading || !profileData) {
     return <div className="profile-loading">Loading...</div>;
   }
 
@@ -259,18 +283,27 @@ const Profile = () => {
               <button onClick={handleSaveProfile} disabled={saving}>
                 <FaSave /> Save
               </button>
-              <button onClick={() => setIsEditing(false)}>
+              <button
+                onClick={() => {
+                  setProfileData(initialProfileData);
+                  setIsEditing(false);
+                  setHasUnsavedChanges(false);
+                }}
+              >
                 <FaTimes /> Cancel
               </button>
             </>
           ) : (
             <>
+              {hasUnsavedChanges && (
+                <button onClick={handleSaveProfile} disabled={saving}>
+                  <FaSave /> Save Changes
+                </button>
+              )}
               <button onClick={() => setIsEditing(true)}>
                 <FaEdit /> Edit Profile
               </button>
-              <button onClick={() => setShowNotifications(!showNotifications)}>
-                <FaBell />
-              </button>
+              <button><FaBell /></button>
               <button><FaCog /></button>
             </>
           )}

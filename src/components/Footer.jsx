@@ -1,8 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
-import './Footer.css';
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [subscribeMessage, setSubscribeMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // 'success' or 'error'
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setSubscribeMessage('Please enter a valid email address');
+      setMessageType('error');
+      return;
+    }
+
+    setIsSubscribing(true);
+    setSubscribeMessage('');
+
+    try {
+      // Simulate API call - in a real app, this would be an actual API endpoint
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Store subscription in localStorage for demo purposes
+      const subscriptions = JSON.parse(localStorage.getItem('newsletter_subscriptions') || '[]');
+      if (!subscriptions.includes(email)) {
+        subscriptions.push(email);
+        localStorage.setItem('newsletter_subscriptions', JSON.stringify(subscriptions));
+      }
+      
+      setSubscribeMessage('Successfully subscribed! Check your email for confirmation.');
+      setMessageType('success');
+      setEmail(''); // Clear the input
+    } catch (error) {
+      setSubscribeMessage('Subscription failed. Please try again.');
+      setMessageType('error');
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
   return (
     <footer className="site-footer">
       <div className="footer-content">
@@ -52,10 +91,24 @@ const Footer = () => {
         <div className="footer-section">
           <h3>Newsletter</h3>
           <p>Subscribe to get the latest recipes and culinary tips</p>
-          <form className="newsletter-form">
-            <input type="email" placeholder="Your email address" />
-            <button type="submit">Subscribe</button>
+          <form className="newsletter-form" onSubmit={handleSubscribe}>
+            <input 
+              type="email" 
+              placeholder="Your email address" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isSubscribing}
+              required
+            />
+            <button type="submit" disabled={isSubscribing}>
+              {isSubscribing ? 'Subscribing...' : 'Subscribe'}
+            </button>
           </form>
+          {subscribeMessage && (
+            <div className={`subscribe-message ${messageType}`}>
+              {subscribeMessage}
+            </div>
+          )}
         </div>
       </div>
       
