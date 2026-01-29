@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Flavour Fusion - React Application
 
 A fully reactive React application converted from the original HTML/CSS Flavour Fusion website, integrated with Firebase Authentication and Firestore.
