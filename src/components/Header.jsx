@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { FaBars, FaSearch } from 'react-icons/fa';
+import { FaUser, FaHeart, FaBook, FaSignOutAlt, FaHome, FaUtensils, FaStar, FaCog, FaHistory } from 'react-icons/fa';
 
 const Header = ({ showHeroSection = true, showNavigation = true, children }) => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [suggestions, setSuggestions] = useState([]);
   const dropdownRef = useRef(null);
-  const searchRef = useRef(null);
 
   const handleLogout = async () => {
     try {
@@ -34,103 +30,69 @@ const Header = ({ showHeroSection = true, showNavigation = true, children }) => 
     setIsDropdownOpen(false);
   };
 
-  // Recipe suggestions data
-  const recipeSuggestions = [
-    'Pizza', 'Pasta', 'Burger', 'Salad', 'Soup', 'Tacos', 'Sushi', 'Curry',
-    'Chicken', 'Beef', 'Pork', 'Fish', 'Vegetarian', 'Vegan', 'Dessert',
-    'Cake', 'Cookies', 'Ice Cream', 'Coffee', 'Tea', 'Smoothie', 'Juice',
-    'Breakfast', 'Lunch', 'Dinner', 'Snack', 'Appetizer', 'Main Course',
-    'Italian', 'Chinese', 'Mexican', 'Indian', 'Japanese', 'Thai', 'Korean',
-    'French', 'Spanish', 'Greek', 'Mediterranean', 'American', 'BBQ'
-  ];
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      setShowSuggestions(false);
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setSearchQuery(value);
-    
-    if (value.trim().length > 0) {
-      const filteredSuggestions = recipeSuggestions.filter(recipe =>
-        recipe.toLowerCase().includes(value.toLowerCase())
-      ).slice(0, 8);
-      setSuggestions(filteredSuggestions);
-      setShowSuggestions(true);
-    } else {
-      setShowSuggestions(false);
-      setSuggestions([]);
-    }
-  };
-
-  const handleSuggestionClick = (suggestion) => {
-    setSearchQuery(suggestion);
-    setShowSuggestions(false);
-    navigate(`/search?q=${encodeURIComponent(suggestion)}`);
-  };
-
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
       }
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setShowSuggestions(false);
-      }
     };
 
-    if (isDropdownOpen || showSuggestions) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isDropdownOpen, showSuggestions]);
+  }, [isDropdownOpen]);
 
   return (
     <>
-      <header>
+      <header className="enhanced-header">
         <div className="logo">
           <img id="ilogo" src="/images/Flavour_Fusion-removebg-preview.png" alt="Logo" />
           <span>FLAVOUR FUSION</span>
         </div>
 
-        {/* Only Hamburger Menu - Always visible */}
-        <div className={`hamburger-menu ${isDropdownOpen ? 'active' : ''}`} onClick={handleMenuClick}>
-          <div className="hamburger-line"></div>
-          <div className="hamburger-line"></div>
-          <div className="hamburger-line"></div>
-        </div>
         
-        {/* Full Navigation Dropdown */}
-        <div ref={dropdownRef} className={`dropdown-content ${isDropdownOpen ? 'show' : ''}`}>
-          <Link to="/" onClick={handleLinkClick}>Home</Link>
-          <Link to="/favorites" onClick={handleLinkClick}>Favorites</Link>
-          <div className="menu-divider"></div>
+        {/* User Section */}
+        <div className="user-section">
           {currentUser ? (
-            <>
-              <div className="dropdown-section">
-                <Link to="/profile" onClick={handleLinkClick}>Profile</Link>
-                <Link to="/recipe-journaling" onClick={handleLinkClick}>Recipe Journaling</Link>
-                <Link to="/journal-manager" onClick={handleLinkClick}>Saved Journals</Link>
+            <div className="user-menu">
+              <div className="user-avatar">
+                <FaUser />
               </div>
-              <div className="menu-divider"></div>
-              <button onClick={handleLogout} className="logout-btn">Logout</button>
-            </>
+              <div className="user-dropdown">
+                <Link to="/" className="dropdown-item">
+                  <FaHome />
+                  Home
+                </Link>
+                <Link to="/profile" className="dropdown-item">
+                  <FaUser />
+                  Profile
+                </Link>
+                <Link to="/favorites" className="dropdown-item">
+                  <FaHeart />
+                  Favorites
+                </Link>
+                <Link to="/recipe-journaling" className="dropdown-item">
+                  <FaBook />
+                  Recipe Journaling
+                </Link>
+                <Link to="/journal-manager" className="dropdown-item">
+                  <FaBook />
+                  Saved Journals
+                </Link>
+                                <div className="dropdown-divider"></div>
+                <button onClick={handleLogout} className="dropdown-item logout-btn">
+                  <FaSignOutAlt />
+                  Logout
+                </button>
+              </div>
+            </div>
           ) : (
-            <>
-              <div className="dropdown-section">
-                <Link to="/login" onClick={handleLinkClick}>Login</Link>
-                <Link to="/signup" onClick={handleLinkClick}>Sign up</Link>
-              </div>
-            </>
+            <div className="auth-buttons">
+              <Link to="/login" className="nav-auth-btn login-btn">Login</Link>
+              <Link to="/signup" className="nav-auth-btn signup-btn">Sign Up</Link>
+            </div>
           )}
         </div>
       </header>
@@ -139,38 +101,21 @@ const Header = ({ showHeroSection = true, showNavigation = true, children }) => 
         <div className="headimg">
           <div className="hero-content">
             <h1>Curated with soul, Crafted with art, where every bite is a perfect blend of flavours</h1>
-            <form onSubmit={handleSearch} className="hero-search" ref={searchRef}>
-              <FaSearch className="search-icon" />
+            <div className="hero-search">
               <span className="search-emoji">🍕</span>
-              <span className="search-emoji">🍜</span>
+              <span className="search-emoji">🍔</span>
               <span className="search-emoji">🥗</span>
+              <span className="search-emoji">🍜</span>
               <span className="search-emoji">🍰</span>
-              <span className="search-emoji">🍷</span>
               <input 
                 type="text" 
-                placeholder="Discover your perfect culinary journey..."
-                value={searchQuery}
-                onChange={handleInputChange}
-                onFocus={() => searchQuery.trim().length > 0 && setShowSuggestions(true)}
+                placeholder="Search for recipes..." 
+                className="search-input"
               />
-              <button type="submit">Search</button>
-              
-              {/* Search Suggestions Dropdown */}
-              {showSuggestions && suggestions.length > 0 && (
-                <div className="search-suggestions">
-                  {suggestions.map((suggestion, index) => (
-                    <div
-                      key={index}
-                      className="suggestion-item"
-                      onClick={() => handleSuggestionClick(suggestion)}
-                    >
-                      <FaSearch className="suggestion-icon" />
-                      <span>{suggestion}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </form>
+              <button className="search-btn">
+                <FaUtensils />
+              </button>
+            </div>
           </div>
           <img src="/images/head-removebg-preview.png" alt="header image" />
         </div>

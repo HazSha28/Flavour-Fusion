@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
-import { FaSearch, FaSpinner, FaExclamationTriangle } from 'react-icons/fa';
+import GrokApiKeySetup from '../components/GrokApiKeySetup';
+import { FaSearch, FaSpinner, FaExclamationTriangle, FaRobot, FaMagic, FaKey } from 'react-icons/fa';
+import { searchRecipesWithGrok, isGrokConfigured } from '../services/grokService';
 import '../index.css';
+import '../styles/GrokSearch.css';
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
+  const source = searchParams.get('source') || 'local';
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [grokRecipes, setGrokRecipes] = useState([]);
+  const [grokLoading, setGrokLoading] = useState(false);
+  const [grokError, setGrokError] = useState(null);
+  const [showApiSetup, setShowApiSetup] = useState(false);
 
   // Home page recipes organized by cuisine with appropriate images
   const homeRecipes = [
@@ -150,17 +158,70 @@ const SearchResults = () => {
     }
   };
 
+  // Search recipes using Grok API
+  const searchWithGrok = async (searchQuery) => {
+    if (!isGrokConfigured()) {
+      setGrokError('Grok API is not configured. Please add your API key.');
+      setShowApiSetup(true);
+      return;
+    }
+
+    try {
+      setGrokLoading(true);
+      setGrokError(null);
+      
+      const grokResults = await searchRecipesWithGrok(searchQuery);
+      console.log(`Found ${grokResults.length} recipes from Grok API`);
+      
+      // Transform Grok results to match the recipe card format
+      const formattedGrokRecipes = grokResults.map((recipe, index) => ({
+        id: `grok-${index}`,
+        title: recipe.title,
+        subtitle: recipe.description || recipe.cuisine || 'AI Generated Recipe',
+        image: recipe.image || `https://picsum.photos/seed/${recipe.title}/400/300.jpg`,
+        category: recipe.category || 'AI Generated',
+        difficulty: recipe.difficulty || 'Medium',
+        rating: 4.5,
+        time: recipe.totalTime || recipe.prepTime || '30 min',
+        cookTime: recipe.cookTime,
+        prepTime: recipe.prepTime,
+        servings: recipe.servings,
+        source: 'grok',
+        ingredients: recipe.ingredients || [],
+        steps: recipe.steps || [],
+        nutrition: recipe.nutrition,
+        tips: recipe.tips || []
+      }));
+      
+      setGrokRecipes(formattedGrokRecipes);
+      
+    } catch (error) {
+      console.error('Grok search error:', error);
+      setGrokError(error.message || 'Failed to search with AI');
+      setGrokRecipes([]);
+    } finally {
+      setGrokLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (query.trim()) {
       // Search for recipes when there's a query
       searchRecipes(query);
+      
+      // If source is 'grok', also search with Grok API
+      if (source === 'grok') {
+        searchWithGrok(query);
+      }
     } else {
       // Show all home page recipes when no search query
       setRecipes(homeRecipes);
       setLoading(false);
       setError(null);
+      setGrokRecipes([]);
+      setGrokError(null);
     }
-  }, [query]);
+  }, [query, source]);
 
   if (loading) {
     return (
@@ -208,30 +269,142 @@ const SearchResults = () => {
     <div className="search-results">
       <div className="search-header">
         <h1>Search Results</h1>
-        <p>Found {recipes.length} recipe{recipes.length !== 1 ? 's' : ''} for "{query}" from multiple sources</p>
+        <p>Found {recipes.length} recipe{recipes.length !== 1 ? 's' : ''} for "{query}"</p>
         {recipes.length > 0 && (
           <div className="api-sources">
             <span className="source-badge">Home Page</span>
-            <span className="source-badge">TheMealDB</span>
           </div>
         )}
       </div>
       
-      <div className="recipes-grid">
-        {recipes.map((recipe) => (
-          <RecipeCard 
-            key={recipe.id}
-            id={recipe.id}
-            title={recipe.title}
-            image={recipe.image}
-            category={recipe.category}
-            rating={recipe.rating}
-            time={recipe.time}
-            cookTime={recipe.cookTime}
-            subtitle={recipe.area}
-          />
-        ))}
-      </div>
+      {/* Local Recipes Section */}
+      {recipes.length > 0 && (
+        <div className="recipes-section">
+          <div className="section-header">
+            <h2>Local Recipes</h2>
+          </div>
+          <div className="recipes-grid">
+            {recipes.map((recipe) => (
+              <RecipeCard 
+                key={recipe.id}
+                id={recipe.id}
+                title={recipe.title}
+                image={recipe.image}
+                category={recipe.category}
+                rating={recipe.rating}
+                time={recipe.time}
+                cookTime={recipe.cookTime}
+                subtitle={recipe.area}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Grok AI Recipes Section */}
+      {source === 'grok' && (
+        <div className="grok-section">
+          <div className="section-header">
+            <h2>
+              <FaRobot className="grok-icon" />
+              AI-Powered Recipe Suggestions
+            </h2>
+            <p className="grok-description">
+              Enhanced recipe recommendations powered by Grok AI
+            </p>
+          </div>
+          
+          {grokLoading && (
+            <div className="grok-loading">
+              <FaMagic className="magic-spinner" />
+              <p>AI is generating personalized recipes...</p>
+            </div>
+          )}
+          
+          {grokError && (
+            <div className="grok-error">
+              <FaExclamationTriangle />
+              <h3>AI Search Error</h3>
+              <p>{grokError}</p>
+              <button onClick={() => searchWithGrok(query)} className="retry-btn">
+                Try Again
+              </button>
+            </div>
+          )}
+          
+          {grokRecipes.length > 0 && (
+            <div className="recipes-grid">
+              {grokRecipes.map((recipe) => (
+                <RecipeCard 
+                  key={recipe.id}
+                  id={recipe.id}
+                  title={recipe.title}
+                  image={recipe.image}
+                  category={recipe.category}
+                  rating={recipe.rating}
+                  time={recipe.time}
+                  cookTime={recipe.cookTime}
+                  subtitle={recipe.subtitle}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Show explore more button if not using Grok */}
+      {source !== 'grok' && recipes.length > 0 && (
+        <div className="explore-more-section">
+          {!isGrokConfigured() ? (
+            <div className="api-key-prompt">
+              <p>
+                <FaKey className="key-icon" />
+                Want AI-powered recipe suggestions? Configure your Grok API key to unlock enhanced recipe discovery.
+              </p>
+              <button 
+                onClick={() => setShowApiSetup(true)}
+                className="setup-api-btn"
+              >
+                <FaKey />
+                Set Up Grok API
+              </button>
+            </div>
+          ) : (
+            <button 
+              onClick={() => searchWithGrok(query)}
+              className="explore-more-action-btn"
+            >
+              <FaMagic className="magic-icon" />
+              Explore More with AI
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* No results found */}
+      {recipes.length === 0 && !grokLoading && grokRecipes.length === 0 && (
+        <div className="search-results-empty">
+          <FaSearch />
+          <h2>No Recipes Found</h2>
+          <p>We couldn't find any recipes matching "{query}". Try different keywords!</p>
+          {!isGrokConfigured() && (
+            <div className="empty-state-api-prompt">
+              <button 
+                onClick={() => setShowApiSetup(true)}
+                className="setup-api-btn"
+              >
+                <FaKey />
+                Set Up Grok API for AI Suggestions
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* API Setup Modal */}
+      {showApiSetup && (
+        <GrokApiKeySetup onClose={() => setShowApiSetup(false)} />
+      )}
     </div>
   );
 };

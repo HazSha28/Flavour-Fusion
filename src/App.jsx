@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { FavoritesProvider } from './contexts/FavoritesContext';
 import Home from './components/Home';
-import Auth from './components/Auth';
+import NewLogin from './pages/NewLogin';
+import NewSignup from './pages/NewSignup';
 import About from './components/About';
 import Profile from './pages/Profile';
 import RecipeJournalingPage from './pages/RecipeJournalingPage';
@@ -14,6 +15,7 @@ import RecipeUpload from './pages/RecipeUpload';
 import AdminUpload from './components/AdminUpload';
 import SearchResults from './pages/SearchResults';
 import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
 
 function App() {
   return (
@@ -24,23 +26,27 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route 
-            path="/auth" 
-            element={
-              <PublicRoute>
-                <Auth />
-              </PublicRoute>
-            } 
-          />
-          <Route 
             path="/login" 
             element={
-              <Navigate to="/auth" replace />
+              <PublicRoute>
+                <NewLogin />
+              </PublicRoute>
             } 
           />
           <Route 
             path="/signup" 
             element={
-              <Navigate to="/auth" replace />
+              <PublicRoute>
+                <NewSignup />
+              </PublicRoute>
+            } 
+          />
+          <Route 
+            path="/forgot-password" 
+            element={
+              <PublicRoute>
+                <NewLogin />
+              </PublicRoute>
             } 
           />
           <Route 
@@ -51,14 +57,7 @@ function App() {
               </ProtectedRoute>
             } 
           />
-          <Route 
-            path="/profile" 
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } 
-          />
+          <Route path="/profile" element={<Profile />} />
           <Route 
             path="/recipe-journaling" 
             element={
@@ -100,15 +99,5 @@ function App() {
   </AuthProvider>
 );
 }
-
-const PublicRoute = ({ children }) => {
-  const { currentUser } = useAuth();
-  
-  if (currentUser) {
-    return <Navigate to="/" replace />;
-  }
-  
-  return children;
-};
 
 export default App;
