@@ -30,9 +30,92 @@ import { allRecipesPart3 } from '../data/allRecipesPart3';
 import { allRecipesPart4 } from '../data/allRecipesPart4';
 import { allRecipesPart5 } from '../data/allRecipesPart5';
 import { allRecipesPart6 } from '../data/allRecipesPart6';
+import { getRecipeDetails as getMealDbRecipeDetails } from '../services/mealdbService';
 
 // Combine all recipe collections
 const combinedRecipes = { ...allRecipes, ...allRecipesPart2, ...allRecipesPart3, ...allRecipesPart4, ...allRecipesPart5, ...allRecipesPart6 };
+
+// Your default recipes
+const defaultRecipes = [
+  {
+    id: 'default-1',
+    title: 'Classic Margherita Pizza',
+    image: 'https://www.themealdb.com/images/media/meals/uvuyxu1503067369.jpg',
+    category: 'Italian',
+    area: 'Italy',
+    rating: 4.8,
+    time: '30 min',
+    cookTime: '20 min',
+    instructions: 'Classic Italian pizza with fresh mozzarella, tomatoes, and basil.',
+    ingredients: ['Pizza dough', 'Tomato sauce', 'Fresh mozzarella', 'Fresh basil', 'Olive oil'],
+    source: 'default'
+  },
+  {
+    id: 'default-2',
+    title: 'Chicken Biryani',
+    image: 'https://www.themealdb.com/images/media/meals/yypstx1511303613.jpg',
+    category: 'Indian',
+    area: 'India',
+    rating: 4.9,
+    time: '60 min',
+    cookTime: '45 min',
+    instructions: 'Fragrant rice dish with spiced chicken and aromatic herbs.',
+    ingredients: ['Basmati rice', 'Chicken', 'Yogurt', 'Spices', 'Herbs'],
+    source: 'default'
+  },
+  {
+    id: 'default-3',
+    title: 'Caesar Salad',
+    image: 'https://www.themealdb.com/images/media/meals/948830.jpg',
+    category: 'Salad',
+    area: 'American',
+    rating: 4.5,
+    time: '15 min',
+    cookTime: '10 min',
+    instructions: 'Crisp romaine lettuce with Caesar dressing, croutons, and parmesan.',
+    ingredients: ['Romaine lettuce', 'Caesar dressing', 'Croutons', 'Parmesan cheese'],
+    source: 'default'
+  },
+  {
+    id: 'default-4',
+    title: 'Beef Tacos',
+    image: 'https://www.themealdb.com/images/media/meals/tyywsw1505930335.jpg',
+    category: 'Mexican',
+    area: 'Mexico',
+    rating: 4.7,
+    time: '25 min',
+    cookTime: '20 min',
+    instructions: 'Seasoned ground beef in crispy taco shells with fresh toppings.',
+    ingredients: ['Ground beef', 'Taco shells', 'Lettuce', 'Tomatoes', 'Cheese'],
+    source: 'default'
+  },
+  {
+    id: 'default-5',
+    title: 'Pad Thai',
+    image: 'https://www.themealdb.com/images/media/meals/wuxruu1508731394.jpg',
+    category: 'Thai',
+    area: 'Thailand',
+    rating: 4.6,
+    time: '30 min',
+    cookTime: '25 min',
+    instructions: 'Stir-fried rice noodles with shrimp, tofu, and tangy tamarind sauce.',
+    ingredients: ['Rice noodles', 'Shrimp', 'Tofu', 'Tamarind sauce', 'Peanuts'],
+    source: 'default'
+  },
+  {
+    id: 'default-6',
+    title: 'French Croissant',
+    image: 'https://www.themealdb.com/images/media/meals/tkxqrw1565905064.jpg',
+    category: 'Bakery',
+    area: 'France',
+    rating: 4.8,
+    time: '180 min',
+    cookTime: '30 min',
+    instructions: 'Buttery, flaky French pastry perfect for breakfast.',
+    ingredients: ['Flour', 'Butter', 'Yeast', 'Milk', 'Sugar'],
+    source: 'default'
+  }
+];
 
 const RecipeDetails = () => {
   const { id } = useParams();
@@ -48,29 +131,63 @@ const RecipeDetails = () => {
 
   // Load recipe based on URL parameter
   useEffect(() => {
-    console.log('=== RECIPE DEBUG ===');
-    console.log('id from URL:', id);
-    console.log('Type of id:', typeof id);
-    console.log('Available recipe keys:', Object.keys(combinedRecipes));
-    console.log('Looking for key:', id);
-    console.log('Key exists in combinedRecipes:', id in combinedRecipes);
-    
-    // Try to get the requested recipe from combined recipes
-    const requestedRecipe = combinedRecipes[id];
-    console.log('Requested recipe:', requestedRecipe?.title || 'NOT FOUND');
-    
-    if (requestedRecipe) {
-      console.log('✅ Found recipe:', requestedRecipe.title);
-      setRecipe(requestedRecipe);
+    const loadRecipe = async () => {
+      console.log('=== RECIPE DEBUG ===');
+      console.log('id from URL:', id);
+      console.log('Type of id:', typeof id);
+      
+      setLoading(true);
       setError(null);
-    } else {
-      console.log('❌ Recipe not found, using default pizza');
-      // Set a default recipe if requested one not found
-      const firstRecipe = combinedRecipes['home-pizza'];
-      setRecipe(firstRecipe);
-      setError(null);
-    }
-    console.log('=== END DEBUG ===');
+      
+      try {
+        // First, check if it's a default recipe
+        const defaultRecipe = defaultRecipes.find(recipe => recipe.id === id);
+        if (defaultRecipe) {
+          console.log('✅ Found default recipe:', defaultRecipe.title);
+          setRecipe(defaultRecipe);
+          return;
+        }
+        
+        // Second, check if it's in local recipe data
+        const localRecipe = combinedRecipes[id];
+        if (localRecipe) {
+          console.log('✅ Found local recipe:', localRecipe.title);
+          setRecipe(localRecipe);
+          return;
+        }
+        
+        // Third, try to fetch from TheMealDB if the ID looks like a meal ID
+        if (id && (id.startsWith('5') || id.length === 5 || /^\d+$/.test(id))) {
+          console.log('🔍 Trying to fetch from TheMealDB with ID:', id);
+          try {
+            const mealDbRecipe = await getMealDbRecipeDetails(id);
+            if (mealDbRecipe) {
+              console.log('✅ Found TheMealDB recipe:', mealDbRecipe.title);
+              setRecipe(mealDbRecipe);
+              return;
+            }
+          } catch (mealDbError) {
+            console.log('❌ TheMealDB fetch failed:', mealDbError.message);
+          }
+        }
+        
+        // If nothing found, use the first default recipe as fallback
+        console.log('❌ Recipe not found, using default recipe');
+        const fallbackRecipe = defaultRecipes[0];
+        setRecipe(fallbackRecipe);
+        
+      } catch (error) {
+        console.error('Error loading recipe:', error);
+        setError('Failed to load recipe');
+        // Use default recipe as fallback
+        setRecipe(defaultRecipes[0]);
+      } finally {
+        setLoading(false);
+        console.log('=== END DEBUG ===');
+      }
+    };
+    
+    loadRecipe();
   }, [id]);
 
   const handleFavorite = () => {

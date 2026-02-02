@@ -230,6 +230,21 @@ export async function getMealsByIngredient(ingredient) {
  * @param {Object} meal - TheMealDB meal object
  * @returns {Object} - Formatted recipe object
  */
+/**
+ * Get recipe details by ID (alias for getMealById)
+ * @param {string} id - Meal ID
+ * @returns {Promise<Object>} - Meal details
+ */
+export async function getRecipeDetails(id) {
+  try {
+    const meal = await getMealById(id);
+    return meal ? formatMealToRecipe(meal) : null;
+  } catch (error) {
+    console.error('Error getting recipe details:', error);
+    throw error;
+  }
+}
+
 export function formatMealToRecipe(meal) {
   if (!meal) return null;
   
