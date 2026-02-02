@@ -5,6 +5,7 @@ import { FavoritesProvider } from './contexts/FavoritesContext';
 import Home from './components/Home';
 import NewLogin from './pages/NewLogin';
 import NewSignup from './pages/NewSignup';
+import ForgotPassword from './pages/ForgotPassword';
 import About from './components/About';
 import Profile from './pages/Profile';
 import RecipeJournalingPage from './pages/RecipeJournalingPage';
@@ -45,7 +46,7 @@ function App() {
             path="/forgot-password" 
             element={
               <PublicRoute>
-                <NewLogin />
+                <ForgotPassword />
               </PublicRoute>
             } 
           />

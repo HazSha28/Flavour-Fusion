@@ -1,0 +1,600 @@
+/* Enhanced Header Search Bar Styles */
+
+/* Expandable YouTube Search */
+.youtube-search-expanded {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 50px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+  margin-right: 16px;
+  border: 2px solid transparent;
+  backdrop-filter: blur(10px);
+}
+
+.youtube-search-expanded::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255, 0, 0, 0.05), rgba(255, 0, 0, 0.02), rgba(255, 0, 0, 0.05));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.youtube-search-expanded:hover::before {
+  opacity: 1;
+}
+
+.youtube-search-expanded:not(.open) {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+}
+
+.youtube-search-expanded.open {
+  width: 360px;
+  padding: 6px;
+  border-color: rgba(255, 0, 0, 0.2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(255, 0, 0, 0.1);
+}
+
+.youtube-search-expanded.open:hover {
+  border-color: rgba(255, 0, 0, 0.3);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18), 0 6px 16px rgba(255, 0, 0, 0.15);
+}
+
+.youtube-search-btn {
+  background: linear-gradient(135deg, #ff0000, #cc0000);
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 50%;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.youtube-search-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.youtube-search-btn:hover::before {
+  left: 100%;
+}
+
+.youtube-search-btn:hover {
+  background: linear-gradient(135deg, #ff1a1a, #e60000);
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+}
+
+.youtube-search-btn:active {
+  transform: scale(0.95) rotate(-2deg);
+  box-shadow: 0 2px 10px rgba(255, 0, 0, 0.3);
+}
+
+.youtube-search-btn svg {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
+}
+
+.youtube-search-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* Pulse animation for the YouTube icon */
+.youtube-search-btn:not(:hover) {
+  animation: youtubePulse 3s ease-in-out infinite;
+}
+
+@keyframes youtubePulse {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 25px rgba(255, 0, 0, 0.5);
+  }
+}
+
+.youtube-search-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.youtube-search-expanded.open .youtube-search-form {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: all;
+}
+
+.youtube-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #000000 !important;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* Force black text with higher specificity */
+.youtube-search-expanded .youtube-search-input {
+  color: #000000 !important;
+}
+
+.youtube-search-expanded input[type="text"] {
+  color: #000000 !important;
+}
+
+.youtube-search-input::placeholder {
+  color: #718096;
+  font-style: italic;
+  transition: color 0.3s ease;
+}
+
+.youtube-search-input:focus {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(255, 0, 0, 0.3);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06), 0 0 0 3px rgba(255, 0, 0, 0.1);
+  transform: scale(1.02);
+}
+
+.youtube-search-input:focus::placeholder {
+  color: #a0aec0;
+}
+
+.youtube-search-submit {
+  background: linear-gradient(135deg, #ff0000, #cc0000);
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.youtube-search-submit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.youtube-search-submit:hover::before {
+  left: 100%;
+}
+
+.youtube-search-submit:hover {
+  background: linear-gradient(135deg, #ff1a1a, #e60000);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(255, 0, 0, 0.4);
+}
+
+.youtube-search-submit:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(255, 0, 0, 0.3);
+}
+
+.youtube-search-submit svg {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
+}
+
+.youtube-search-submit:hover svg {
+  transform: scale(1.1);
+}
+
+/* User Section Updates */
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Hero Search Bar */
+.hero-search-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  animation: fadeInUp 0.8s ease-out 0.5s both;
+}
+
+.hero-search-form {
+  width: 100%;
+  max-width: 600px;
+}
+
+.hero-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95));
+  border-radius: 60px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(139, 151, 124, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.hero-search-wrapper:hover {
+  border-color: rgba(139, 151, 124, 0.4);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18), 0 6px 16px rgba(139, 151, 124, 0.15);
+  transform: translateY(-2px);
+}
+
+.hero-search-wrapper:focus-within {
+  border-color: rgba(139, 151, 124, 0.6);
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.2), 0 8px 20px rgba(139, 151, 124, 0.2);
+  transform: translateY(-3px);
+}
+
+.search-icon {
+  font-size: 20px;
+  margin-left: 20px;
+  margin-right: 10px;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.hero-search-wrapper:hover .search-icon,
+.hero-search-wrapper:focus-within .search-icon {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.hero-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 18px 0;
+  font-size: 16px;
+  background: transparent;
+  color: #000000 !important;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.hero-search-input::placeholder {
+  color: #64748b;
+  font-style: italic;
+  transition: color 0.3s ease;
+}
+
+.hero-search-input:focus::placeholder {
+  color: #94a3b8;
+}
+
+.hero-search-btn {
+  background: linear-gradient(135deg, #8b977c, #6b7a5a);
+  border: none;
+  color: white;
+  padding: 18px 28px;
+  border-radius: 60px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(139, 151, 124, 0.3);
+  margin-right: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-search-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.hero-search-btn:hover::before {
+  left: 100%;
+}
+
+.hero-search-btn:hover {
+  background: linear-gradient(135deg, #6b7a5a, #5a6949);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(139, 151, 124, 0.4);
+}
+
+.hero-search-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(139, 151, 124, 0.3);
+}
+
+.hero-search-btn svg {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
+}
+
+.hero-search-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* Animation for hero search */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design for Hero Search */
+@media (max-width: 768px) {
+  .hero-search-container {
+    margin-top: 30px;
+    padding: 0 20px;
+  }
+  
+  .hero-search-form {
+    max-width: 100%;
+  }
+  
+  .hero-search-wrapper {
+    border-radius: 50px;
+  }
+  
+  .hero-search-input {
+    font-size: 15px;
+    padding: 16px 0;
+  }
+  
+  .hero-search-btn {
+    padding: 16px 24px;
+    font-size: 15px;
+    border-radius: 50px;
+  }
+  
+  .search-icon {
+    font-size: 18px;
+    margin-left: 16px;
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-search-container {
+    margin-top: 25px;
+    padding: 0 16px;
+  }
+  
+  .hero-search-wrapper {
+    border-radius: 40px;
+  }
+  
+  .hero-search-input {
+    font-size: 14px;
+    padding: 14px 0;
+  }
+  
+  .hero-search-btn {
+    padding: 14px 20px;
+    font-size: 14px;
+    border-radius: 40px;
+    gap: 6px;
+  }
+  
+  .hero-search-btn span {
+    display: none; /* Hide text on very small screens */
+  }
+  
+  .search-icon {
+    font-size: 16px;
+    margin-left: 14px;
+    margin-right: 6px;
+  }
+}
+
+/* Dark mode support for hero search */
+@media (prefers-color-scheme: dark) {
+  .hero-search-wrapper {
+    background: linear-gradient(135deg, rgba(45, 55, 72, 0.95), rgba(74, 85, 104, 0.95));
+    border-color: rgba(139, 151, 124, 0.3);
+  }
+  
+  .hero-search-input {
+    color: #f7fafc !important;
+  }
+  
+  .hero-search-input::placeholder {
+    color: #a0aec0;
+  }
+  
+  .hero-search-input:focus::placeholder {
+    color: #cbd5e0;
+  }
+}
+.hero-emojis {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.search-emoji {
+  font-size: 2rem;
+  opacity: 0.8;
+  animation: float 3s ease-in-out infinite;
+}
+
+.search-emoji:nth-child(1) { animation-delay: 0s; }
+.search-emoji:nth-child(2) { animation-delay: 0.5s; }
+.search-emoji:nth-child(3) { animation-delay: 1s; }
+.search-emoji:nth-child(4) { animation-delay: 1.5s; }
+.search-emoji:nth-child(5) { animation-delay: 2s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .youtube-search-expanded.open {
+    width: 320px;
+  }
+  
+  .youtube-search-input {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+  
+  .youtube-search-submit {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+  
+  .youtube-search-btn {
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+  }
+  
+  .hero-emojis {
+    gap: 15px;
+  }
+  
+  .search-emoji {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .youtube-search-expanded.open {
+    width: 280px;
+  }
+  
+  .youtube-search-expanded {
+    margin-right: 8px;
+  }
+  
+  .youtube-search-input {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+  
+  .youtube-search-submit {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .youtube-search-btn {
+    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+  }
+  
+  .hero-emojis {
+    gap: 10px;
+  }
+  
+  .search-emoji {
+    font-size: 1.2rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .youtube-search-expanded {
+    background: #2d3748;
+    border: 1px solid #4a5568;
+  }
+  
+  .youtube-search-input {
+    color: #f7fafc;
+  }
+  
+  .youtube-search-input::placeholder {
+    color: #a0aec0;
+  }
+}
+
+/* Accessibility */
+.youtube-search-btn:focus,
+.youtube-search-input:focus,
+.youtube-search-submit:focus {
+  outline: 2px solid #8b977c;
+  outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .youtube-search-expanded {
+    border: 2px solid #2d3748;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .youtube-search-expanded,
+  .youtube-search-form,
+  .youtube-search-btn,
+  .youtube-search-submit {
+    transition: none;
+  }
+  
+  .search-emoji {
+    animation: none;
+  }
+}

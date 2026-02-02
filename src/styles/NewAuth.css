@@ -46,6 +46,143 @@
   75% { transform: translateY(-15px) rotate(2deg); }
 }
 
+/* Forgot Password Specific Styles */
+.back-to-login-btn {
+  background: none;
+  border: none;
+  color: #667eea;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.back-to-login-btn:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: #5a67d8;
+}
+
+.success-icon-large {
+  font-size: 4rem;
+  color: #48bb78;
+  margin-bottom: 20px;
+  animation: successPulse 2s ease-in-out infinite;
+}
+
+@keyframes successPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.reset-instructions {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.reset-instructions h3 {
+  color: #2d3748;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.reset-instructions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.reset-instructions li {
+  color: #4a5568;
+  padding: 8px 0;
+  padding-left: 25px;
+  position: relative;
+}
+
+.reset-instructions li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #48bb78;
+  font-weight: bold;
+}
+
+.email-tips {
+  background: rgba(255, 193, 7, 0.1);
+  border-left: 4px solid #ffc107;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+.email-tips p {
+  color: #856404;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+
+.email-tips ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.email-tips li {
+  color: #856404;
+  padding: 5px 0;
+  padding-left: 20px;
+  position: relative;
+  font-size: 14px;
+}
+
+.email-tips li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #ffc107;
+}
+
+.new-auth-link-btn {
+  background: none;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  color: #667eea;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.new-auth-link-btn:hover {
+  background: rgba(102, 126, 234, 0.1);
+  border-color: #667eea;
+}
+
+.new-auth-btn.secondary {
+  background: linear-gradient(135deg, #718096 0%, #4a5568 100%);
+  margin-bottom: 15px;
+}
+
+.new-auth-btn.secondary:hover {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+}
+
+.form-hint {
+  color: #718096;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+  font-style: italic;
+}
+
 /* Main Auth Container */
 .new-auth-container {
   background: rgba(255, 255, 255, 0.95);
