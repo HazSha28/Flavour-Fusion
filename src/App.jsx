@@ -7,7 +7,7 @@ import NewLogin from './pages/NewLogin';
 import NewSignup from './pages/NewSignup';
 import ForgotPassword from './pages/ForgotPassword';
 import About from './components/About';
-import Profile from './pages/Profile';
+import EnhancedProfile from './pages/EnhancedProfile';
 import RecipeJournalingPage from './pages/RecipeJournalingPage';
 import JournalManager from './components/JournalManager';
 import Favorites from './pages/Favorites';
@@ -58,7 +58,14 @@ function App() {
               </ProtectedRoute>
             } 
           />
-          <Route path="/profile" element={<Profile />} />
+          <Route 
+            path="/profile" 
+            element={
+              <ProtectedRoute>
+                <EnhancedProfile />
+              </ProtectedRoute>
+            } 
+          />
           <Route 
             path="/recipe-journaling" 
             element={

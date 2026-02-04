@@ -1,0 +1,381 @@
+/* ======================
+   ROOT VARIABLES
+====================== */
+:root {
+  --primary: #8b977c;
+  --primary-dark: #6b735c;
+  --primary-light: #e8f0e2;
+  --primary-soft: rgba(139,151,124,0.15);
+
+  --accent: #e9c46a;
+  --accent-dark: #d4b15f;
+
+  --white: #ffffff;
+  --light: #f8f9fa;
+  --light-gray: #e9ecef;
+  --gray: #6c757d;
+  --dark: #2f2f2f;
+
+  --text-primary: #2d3436;
+  --text-secondary: #4a4a4a;
+  --text-muted: #95a5a6;
+
+  --bg-primary: #f5f7fa;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-pill: 9999px;
+
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.1);
+  --shadow-lg: 0 16px 40px rgba(0,0,0,0.14);
+
+  --transition: all 0.3s ease;
+  --font: 'Inter', system-ui, sans-serif;
+}
+
+/* ======================
+   BASE
+====================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* ======================
+   PROFILE WRAPPER
+====================== */
+.enhanced-profile {
+  max-width: 1200px;
+  margin: auto;
+  padding: 24px;
+}
+
+/* ======================
+   COVER
+====================== */
+.cover-photo {
+  height: 280px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    120deg,
+    #8b977c,
+    #e9c46a,
+    #8ecae6
+  );
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.cover-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.15),
+    rgba(0,0,0,0.45)
+  );
+}
+
+/* ======================
+   PROFILE HEADER
+====================== */
+.profile-header {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  padding: 32px;
+  margin-top: -100px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  z-index: 5;
+}
+
+/* ======================
+   AVATAR
+====================== */
+.profile-avatar {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--white);
+  background: var(--white);
+}
+
+/* glow ring */
+.profile-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--accent)
+  );
+  z-index: -1;
+  filter: blur(10px);
+  opacity: 0.6;
+}
+
+/* upload button */
+.profile-avatar button {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.profile-avatar button:hover {
+  background: var(--primary-dark);
+  transform: scale(1.1);
+}
+
+/* ======================
+   PROFILE INFO
+====================== */
+.profile-info {
+  flex: 1;
+}
+
+.profile-info h1 {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.profile-info p {
+  margin-top: 6px;
+  color: var(--text-secondary);
+}
+
+.profile-info button {
+  margin-top: 14px;
+  padding: 8px 18px;
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.profile-info button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+/* ======================
+   EDIT MODE
+====================== */
+.profile-info input,
+.profile-info textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--light-gray);
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.profile-info textarea {
+  resize: vertical;
+}
+
+.profile-info input:focus,
+.profile-info textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.edit-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.edit-actions button {
+  flex: 1;
+}
+
+/* ======================
+   NAV TABS
+====================== */
+.profile-nav {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.profile-nav button {
+  padding: 12px 16px;
+  font-weight: 600;
+  color: var(--gray);
+  position: relative;
+}
+
+.profile-nav button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 0;
+  height: 3px;
+  background: var(--primary);
+  transition: var(--transition);
+}
+
+.profile-nav button.active,
+.profile-nav button:hover {
+  color: var(--primary);
+}
+
+.profile-nav button.active::after,
+.profile-nav button:hover::after {
+  width: 100%;
+}
+
+/* ======================
+   RECIPES GRID
+====================== */
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.recipe-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  position: relative;
+}
+
+.recipe-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.recipe-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.recipe-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.35),
+    transparent
+  );
+}
+
+.recipe-info {
+  padding: 14px;
+}
+
+.recipe-info h4 {
+  font-size: 16px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.recipe-card:hover .recipe-info h4 {
+  color: var(--primary);
+}
+
+/* ======================
+   EMPTY STATE
+====================== */
+.empty-state {
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray);
+  gap: 12px;
+}
+
+/* ======================
+   ABOUT SECTION
+====================== */
+.about-section {
+  background: var(--white);
+  padding: 24px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  margin-top: 24px;
+}
+
+/* ======================
+   DARK MODE
+====================== */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #1f1f1f;
+  }
+
+  .profile-header,
+  .recipe-card,
+  .about-section {
+    background: #2b2b2b;
+    color: #f1f1f1;
+  }
+
+  .profile-info p {
+    color: #ccc;
+  }
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-avatar {
+    margin-bottom: 12px;
+  }
+}

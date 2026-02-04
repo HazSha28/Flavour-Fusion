@@ -13,6 +13,7 @@ import './styles/RecipeJournalingPage.css'
 import './styles/RecipeUpload.css'
 import './styles/SearchResults.css'
 import './styles/EnhancedSearchResults.css'
+import './styles/EnhancedProfile.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
